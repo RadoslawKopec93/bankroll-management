@@ -1,0 +1,44 @@
+
+
+.main-menu {
+  overflow:hidden;
+  background-color: #cb2d06;
+  &__app-name{
+    background-color: black;
+    text-align: center;
+    font-family: Roboto;
+    color: white;
+    text-shadow:
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
+  }
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    white-space: nowrap;
+    text-align: center
+  }
+  &__item {
+    display: inline-block;
+    height: 60px;
+    width: 50px;
+    text-align: center
+  }
+  &__link {
+    display: inline-block;
+    padding: 20px 0;
+  }
+}
+.GFG {
+  color: white;
+  font-size: 20px;
+  font-size: 20px;
+  text-shadow: -1px 1px 0 #000,
+  1px 1px 0 #000,
+  1px -1px 0 #000,
+  -1px -1px 0 #000;
+}
+

@@ -1,0 +1,29 @@
+.chart-box {
+  width: 100%;
+  height: 600px;
+}
+.grid-row{
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+}
+.grid-item {
+  font-weight: 800;
+  margin: 0;
+  padding: 20px;
+}
+
+.totalResult {
+  height: 84.2%;
+  width: 100%;
+&__Header{
+  font-family: Roboto;
+  font-size: 22px;
+  text-align: center;
+  color: BLACK;
+  margin: 0;
+  padding: 20px 10px;
+  border-left: 3px solid #cb2d06;
+  border-bottom: 10px solid #cb2d06;
+  border-right: 3px solid #cb2d06;
+}
+}
