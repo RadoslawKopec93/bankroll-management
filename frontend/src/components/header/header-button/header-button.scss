@@ -1,0 +1,31 @@
+.headerMenuButton{
+  background-color: green;
+  height: 50px;
+  width: 100px;
+  &_test{
+  ::before{
+    content: "";
+    background-color: green;
+    top: 0;
+    bottom: 0;
+    height: 50px;
+    width: 100px;
+    display: block;
+    position: absolute;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border: blueviolet solid 2px;
+    box-sizing: border-box;
+    border-left: none;
+  }
+
+/*  &:hover{
+    cursor: pointer;
+    filter: brightness(85%);
+    transition: 0.5s;
+  }*/
+  }
+}
+

@@ -1,7 +1,6 @@
 
 <template>
-  <h3>{{test}}</h3>
-  <canvas id="myChart"></canvas>
+
 </template>
 <script lang="ts">
 

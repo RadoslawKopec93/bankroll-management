@@ -1,9 +1,14 @@
 import {Vue} from "vue-class-component";
 import Chart from "chart.js/auto";
 import {computed, defineComponent, ref} from "vue";
+import ResultBox from "@/components/result-box/result-box.vue";
 
 
 export default defineComponent ({
+       name:"LineChart",
+       components: {
+           ResultBox,
+       },
         mounted() {
             this.updateStockPriceHistoryChart(this.totalResult)
         },

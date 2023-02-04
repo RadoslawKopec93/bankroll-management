@@ -3,7 +3,7 @@
   <router-view></router-view>
 </template>
 <script>
-import Header from './components/header/header'
+import Header from './components/header/header.vue'
 import HelloWorld from './components/HelloWorld';
 import Hello2 from './components/Hello2'
 export default {
