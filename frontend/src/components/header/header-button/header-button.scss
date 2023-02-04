@@ -2,10 +2,15 @@
   background-color: green;
   height: 50px;
   width: 100px;
-  &_test{
-  ::before{
-    content: "";
-    background-color: green;
+  border: blueviolet solid 2px;
+  box-sizing: border-box;
+  border-left: none;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  top: 0;
+  bottom: 0;
+ /* &_test{
     top: 0;
     bottom: 0;
     height: 50px;
@@ -18,14 +23,13 @@
     align-content: center;
     border: blueviolet solid 2px;
     box-sizing: border-box;
-    border-left: none;
-  }
-
-/*  &:hover{
+    border-left: none;*/
+  //}
+  &:hover{
     cursor: pointer;
     filter: brightness(85%);
     transition: 0.5s;
-  }*/
   }
+
 }
 

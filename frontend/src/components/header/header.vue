@@ -3,7 +3,8 @@
   <div class="main-menu__navHeader">
     <div class="main-menu__test">
        <header-button/>
-<!--      <header-button/>-->
+       <header-button/>
+      <header-button/>
     </div>
   </div>
 

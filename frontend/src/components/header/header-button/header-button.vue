@@ -1,5 +1,5 @@
 <template>
-<div class="headerMenuButton_test">
+<div class="headerMenuButton">
   <p>test</p>
 </div>
 </template>
