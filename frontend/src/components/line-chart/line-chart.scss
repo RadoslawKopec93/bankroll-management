@@ -12,11 +12,7 @@
 }
 
 .totalResult {
-
   width: 100%;
-  display: grid;
-  justify-content: center;
-
 &__Header{
   text-align: center;
   font-family: Roboto;
@@ -26,4 +22,26 @@
   margin: 0;
   padding: 20px 10px;
 }
+}
+
+/*#app{
+  display: flex;
+  justify-content: flex-start;
+  align-items:center;
+  flex-direction: column;
+  padding: 10px;
+  width: calc(100% - 20px);
+  height: calc(100vh - 20px);
+  color: red;
+  border: green;
+}*/
+
+ul {
+  list-style: none;
+  padding: 0;
+ // background-color: #006699;
+  //text-align: center;
+  li {
+    display: inline-block;
+  }
 }

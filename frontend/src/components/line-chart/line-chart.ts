@@ -1,13 +1,14 @@
 import {Vue} from "vue-class-component";
 import Chart from "chart.js/auto";
-import {computed, defineComponent, ref} from "vue";
+import {computed, defineComponent, reactive, ref, watch} from "vue";
 import ResultBox from "@/components/result-box/result-box.vue";
-
+import CardComponent from "@/components/card-component/card-component.vue";
 
 export default defineComponent ({
        name:"LineChart",
        components: {
            ResultBox,
+           CardComponent,
        },
         mounted() {
             this.updateStockPriceHistoryChart(this.totalResult)
@@ -15,6 +16,10 @@ export default defineComponent ({
         setup() {
             let labels = [10.11,20.11,21.11,23.11, 24.11];
             let results = [-100,300,28,-298,100];
+            const addResult = computed (() => {
+                return "test";
+            });
+
             const updateStockPriceHistoryChart = (totalResult: string) => {
                     const ctx = document.getElementById('resultChart') as HTMLCanvasElement;
                     let data = {
@@ -45,11 +50,8 @@ export default defineComponent ({
                         data: data,
                     })
             }
+            let movies = ref(['Batman','test2']);
 
-            const nameList = () => {
-                let test1: string = "aaaa";
-                return test1;
-            }
             const totalResult = computed(() => {
                 let sum = 0;
                 results.forEach((result) => {
@@ -57,10 +59,20 @@ export default defineComponent ({
                 });
 
                 return sum.toString();
-            });
+            })
+
+            const cards = ref(['A','K','Q','J','T','9','8','7','6','5','4','3','2']);
+            const colors = ref(['SPADE','CLUB','DIAMOND','HEART']);
+            const addMovie = () => {
+                let test = "dupa";
+                movies.value.push(test);
+            }
             return {
+                colors,
+                cards,
+                movies,
+                addMovie,
                 totalResult,
-                nameList,
                 updateStockPriceHistoryChart,
             }
         },

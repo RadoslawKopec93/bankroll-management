@@ -1,35 +1,35 @@
-.headerMenuButton{
-  background-color: green;
-  height: 50px;
-  width: 100px;
-  border: blueviolet solid 2px;
-  box-sizing: border-box;
-  border-left: none;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  top: 0;
-  bottom: 0;
- /* &_test{
-    top: 0;
-    bottom: 0;
-    height: 50px;
+.headerMenuButton {
+  &__basicButton {
+    background-color: #cb2d06;
     width: 100px;
-    display: block;
-    position: absolute;
-    text-align: center;
+    color: white;
     display: flex;
     justify-content: center;
     align-content: center;
-    border: blueviolet solid 2px;
-    box-sizing: border-box;
-    border-left: none;*/
-  //}
-  &:hover{
-    cursor: pointer;
-    filter: brightness(85%);
-    transition: 0.5s;
+    font-family: Roboto;
+    &:hover {
+      cursor: pointer;
+      filter: brightness(85%);
+      transition: 0.5s;
+    }
+
+  }
+  &__userMenu{
+    background-color: #cb2d06;
+    border: grey solid 1px;
+    width: 150px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    font-family: Roboto;
+    &:hover {
+      cursor: pointer;
+      filter: brightness(85%);
+      transition: 0.5s;
+    }
   }
 
 }
+
 

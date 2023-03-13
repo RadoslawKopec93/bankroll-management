@@ -1,5 +1,12 @@
 // vue.config.ts
 module.exports = {
+    css: {
+        loaderOptions: {
+            sass: {
+                additionalData: `@import "@/../src/global.scss";`,
+            },
+        },
+    },
     lintOnSave:false,
     // https://cli.vuejs.org/config/#devserver-proxy
     devServer: {

@@ -7,7 +7,8 @@
     <div class="grid-item"><line-chart/></div>
   </div>
   </body>-->
-  <line-chart/>
+  <MainHeader/>
+  <LineChart/>
 </template>
 
 <script lang="ts">
@@ -15,9 +16,13 @@ import { Options, Vue } from 'vue-class-component';
 //import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 //import Hello2 from '@/components/Hello2.vue'
 import LineChart from '@/components/line-chart/line-chart.vue'
+import ArbitrageBettingCalculator from "@/components/arbitrage-betting-calculator/arbitrage-betting-calculator.vue";
+import MainHeader from '@/components/header/main-header.vue';
 @Options({
   components: {
     LineChart,
+    ArbitrageBettingCalculator,
+    MainHeader
   },
 })
 export default class NoName extends Vue {

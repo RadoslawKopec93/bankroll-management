@@ -1,6 +1,6 @@
 <template>
-<div class="headerMenuButton">
-  <p>test</p>
+<div :class="headerButtonStylesClass">
+  <p>{{ label }}</p>
 </div>
 </template>
 <script>

@@ -1,0 +1,15 @@
+
+.mainHeader{
+  background-color: $mainColor;
+  width: 100%;
+  height: 50px;
+  position: sticky;
+  &__headerInscription{
+    display: flex;
+    color:$mainBackgroundColor;
+    font-family: Roboto;
+    font-weight: bold;
+    height: 100%;
+    justify-content: center;
+  }
+}
