@@ -18,7 +18,7 @@ export default defineComponent({
         });
         const test1 = 100
         const resultBoxData = computed( () => {
-            let data: resultData = {
+            const data: resultData = {
                 date: "aa",
                 moneyResult: test1,
             };

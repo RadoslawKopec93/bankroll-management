@@ -1,11 +1,14 @@
 import {createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
+import MainPageView from '@/components/MainPageView/MainPageView.vue'
+import LineChart from '@/components/MainPageView/line-chart/line-chart.vue'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: MainPageView
   },
   {
     path: '/about',

@@ -1,13 +1,9 @@
 <template>
-<!--  <Header/>-->
   <router-view></router-view>
-<!--  <p>ccc</p>
-  <p>{{ msg }}</p>
-
-  <button @click="test()">test</button>
-  <button @click="test1()">test1</button>-->
 </template>
 <script>
+/* eslint-disable */
+
 import Header from './components/header/main-header.vue'
 import Hello2 from './components/Hello2'
 export default {
