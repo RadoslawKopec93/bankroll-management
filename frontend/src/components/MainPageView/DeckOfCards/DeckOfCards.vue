@@ -105,16 +105,41 @@
       <Card
           :card-name="firstFlopCard.name"
           :card-color="firstFlopCard.color"
-          :is-visible="first"
+          :is-visible="firstCard"
       />
     </div>
-    <!--    <div>
-          <Card
-              card-name="K"
-              card-color="CLUB"
-              :is-visible="true"
-          />
-        </div>-->
+    <div  draggable="true"
+          @dragstart="startDrag($event,secondFlopCard)">
+      <Card
+          :card-name="secondFlopCard.name"
+          :card-color="secondFlopCard.color"
+          :is-visible="secondCard"
+      />
+    </div>
+    <div  draggable="true"
+          @dragstart="startDrag($event,thirdFlopCard)">
+      <Card
+          :card-name="thirdFlopCard.name"
+          :card-color="thirdFlopCard.color"
+          :is-visible="thirdCard"
+      />
+    </div>
+    <div  draggable="true"
+          @dragstart="startDrag($event,fourthFlopCard)">
+      <Card
+          :card-name="fourthFlopCard.name"
+          :card-color="fourthFlopCard.color"
+          :is-visible="fourthCard"
+      />
+    </div>
+    <div  draggable="true"
+          @dragstart="startDrag($event,fifthFlopCard)">
+      <Card
+          :card-name="fifthFlopCard.name"
+          :card-color="fifthFlopCard.color"
+          :is-visible="fifthCard"
+      />
+    </div>
        </div>
   </figure>
 
@@ -126,20 +151,88 @@ type cardTypeArray = {id: string ,name: string,color:string,list:number, mainId:
 type cardType = {id: string ,name: string,color:string,list:number, mainId: string}
 
 const firstFlopCard = ref({id:'0',name:'A',color:'CLUB',list:1, mainId: "0"})
-let first = false;
+const secondFlopCard = ref({id:'0',name:'A',color:'CLUB',list:1, mainId: "0"})
+const thirdFlopCard = ref({id:'0',name:'A',color:'CLUB',list:1, mainId: "0"})
+const fourthFlopCard = ref({id:'0',name:'A',color:'CLUB',list:1, mainId: "0"})
+const fifthFlopCard = ref({id:'0',name:'A',color:'CLUB',list:1, mainId: "0"})
+
+let firstCard = false;
+let secondCard = false;
+let thirdCard = false;
+let fourthCard = false;
+let fifthCard = false;
+
+let count = 0;
+
 const onDrop = (event, list) =>{
-    const itemID = event.dataTransfer.getData('itemID');
-    cardNamesClub.value.push(firstFlopCard.value);
-    //firstFlopCard.value = item;
-    first = false;
+  count--;
+  console.log(count);
+  switch (count){
+    case 0:{
+      console.log(firstFlopCard.value);
+      cardNamesClub.value.push(firstFlopCard.value);
+      firstCard = false;
+      break;
+    }
+    case 1:{
+      cardNamesClub.value.push(secondFlopCard.value);
+      secondCard = false;
+      break;
+    }
+    case 2:{
+      cardNamesClub.value.push(thirdFlopCard.value);
+      thirdCard = false;
+      break;
+    }
+    case 3:{
+      cardNamesClub.value.push(fourthFlopCard.value);
+      fourthCard = false;
+      break;
+    }
+    case 4:{
+      cardNamesClub.value.push(fifthFlopCard.value);
+      fifthCard = false;
+      break;
+    }
+  }
+  cardNamesClub.value.sort( (a,b) => (a.id < b.id ? -1 : 1))
+
 }
 const onDropSelected = (event) =>{
+  console.log(count);
   const itemID = event.dataTransfer.getData('itemID');
   const item = cardNamesClub.value.find((item) => item.id == itemID) as cardType;
   const newList = cardNamesClub.value.filter((item) => item.id != itemID) as cardTypeArray;
   cardNamesClub.value = newList;
-  firstFlopCard.value = item;
-  first = true;
+
+  switch (count){
+    case 0:{
+      firstFlopCard.value = item;
+      firstCard = true;
+      break;
+    }
+    case 1:{
+      secondFlopCard.value = item;
+      secondCard = true;
+      break;
+    }
+    case 2:{
+      thirdFlopCard.value = item;
+      thirdCard = true;
+      break;
+    }
+    case 3:{
+      fourthFlopCard.value = item;
+      fourthCard = true;
+      break;
+    }
+    case 4:{
+      fifthFlopCard.value = item;
+      fifthCard = true;
+      break;
+    }
+  }
+  count++
 }
 const segratedlist: Ref<cardTypeArray> = ref([])
 
