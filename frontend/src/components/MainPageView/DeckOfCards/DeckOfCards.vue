@@ -1,146 +1,95 @@
 <template>
-<figure>
-  <!--   <ul>
-      <li v-for="card in cardNames">
-        <Card
-            :card-name="card"
-            card-color="DIAMOND"
-            :is-visible="true"
-        />
-      </li>
-    </ul>
-    <ul>
-      <li v-for="card in cardNames">
-        <Card
-            :card-name="card"
-            card-color="SPADE"
-            :is-visible="true"
-        />
-      </li>
-    </ul>-->
-<!--  <ul>
-    <li v-for="card in cardNames">
-      <Card
-          :card-name="card"
-          card-color="HEART"
-          :is-visible="true"
-      />
-    </li>
-  </ul>-->
-<!--  <div>
-      <div v-for="card in cardNamesDiamond"
-           :key="card.id + card.color">
-        <Card
-            :card-name="card.id"
-            :card-color="card.color"
-            :is-visible="true"
-        />
-      </div>
-  </div>-->
-  <ul @drop="onDrop($event,1)"
-      @dragenter.prevent
-      @dragover.prevent>
-    <li v-for="card in getList(1)"
-        :key="card.id"
-        draggable="true"
-        @dragstart="startDrag($event,card)"
-        >
-      <Card
-          :card-name="card.name"
-          :card-color="card.color"
-          :is-visible="true"
-      />
-    </li>
-  </ul>
-  <ul @drop="onDrop($event,2)"
-      @dragenter.prevent
-      @dragover.prevent>
-    <li v-for="card in getList(2)"
-        :key="card.id"
-        draggable="true"
-        @dragstart="startDrag($event,card)"
-        >
-      <Card
-          :card-name="card.name"
-          :card-color="card.color"
-          :is-visible="true"
-      />
-    </li>
-  </ul>
-  <ul @drop="onDrop($event,3)"
-      @dragenter.prevent
-      @dragover.prevent>
-    <li v-for="card in getList(3)"
-        :key="card.id"
-        draggable="true"
-        @dragstart="startDrag($event,card)"
-        >
-      <Card
-          :card-name="card.name"
-          :card-color="card.color"
-          :is-visible="true"
-      />
-    </li>
-  </ul>
-  <ul @drop="onDrop($event,4)"
-      @dragenter.prevent
-      @dragover.prevent>
-    <li v-for="card in getList(4)"
-        :key="card.id"
-        draggable="true"
-        @dragstart="startDrag($event,card)"
-        >
-      <Card
-          :card-name="card.name"
-          :card-color="card.color"
-          :is-visible="true"
-      />
-    </li>
-  </ul>
-  <div class="selectedCard" @drop="onDropSelected($event)"
+<figure class="DeckOfCards">
+  <div class="DeckOfCards__rows" @drop="onDrop($event)"
        @dragenter.prevent
        @dragover.prevent>
-    <div  draggable="true"
-          @dragstart="startDrag($event,firstFlopCard)">
-      <Card
+  <Card
+      v-for="card in getList(1)"
+      :key="card.id"
+      draggable="true"
+      @dragstart="startDrag($event,card)"
+      :card-name="card.name"
+      :card-color="card.color"
+      :is-visible="true"
+  />
+  </div>
+  <div class="DeckOfCards__rows" @drop="onDrop($event)"
+       @dragenter.prevent
+       @dragover.prevent>
+    <Card
+        v-for="card in getList(2)"
+        :key="card.id"
+        draggable="true"
+        @dragstart="startDrag($event,card)"
+        :card-name="card.name"
+        :card-color="card.color"
+        :is-visible="true"
+    />
+  </div>
+  <div class="DeckOfCards__rows" @drop="onDrop($event)"
+       @dragenter.prevent
+       @dragover.prevent>
+    <Card
+        v-for="card in getList(3)"
+        :key="card.id"
+        draggable="true"
+        @dragstart="startDrag($event,card)"
+        :card-name="card.name"
+        :card-color="card.color"
+        :is-visible="true"
+    />
+  </div>
+  <div class="DeckOfCards__rows" @drop="onDrop($event)"
+       @dragenter.prevent
+       @dragover.prevent>
+    <Card
+        v-for="card in getList(4)"
+        :key="card.id"
+        draggable="true"
+        @dragstart="startDrag($event,card)"
+        :card-name="card.name"
+        :card-color="card.color"
+        :is-visible="true"
+    />
+  </div>
+  <div class="DeckOfCards__zone" @drop="onDropSelected($event)"
+       @dragenter.prevent
+       @dragover.prevent>
+  <div class="DeckOfCards__zone--selected">
+      <Card draggable="true"
+            @dragstart="startDrag($event,firstFlopCard)"
           :card-name="firstFlopCard.name"
           :card-color="firstFlopCard.color"
           :is-visible="firstCard"
       />
-    </div>
-    <div  draggable="true"
-          @dragstart="startDrag($event,secondFlopCard)">
-      <Card
+      <Card draggable="true"
+            @dragstart="startDrag($event,secondFlopCard)"
           :card-name="secondFlopCard.name"
           :card-color="secondFlopCard.color"
           :is-visible="secondCard"
       />
-    </div>
-    <div  draggable="true"
-          @dragstart="startDrag($event,thirdFlopCard)">
-      <Card
+      <Card draggable="true"
+            @dragstart="startDrag($event,thirdFlopCard)"
           :card-name="thirdFlopCard.name"
           :card-color="thirdFlopCard.color"
           :is-visible="thirdCard"
       />
-    </div>
-    <div  draggable="true"
-          @dragstart="startDrag($event,fourthFlopCard)">
-      <Card
+
+      <Card draggable="true"
+            @dragstart="startDrag($event,fourthFlopCard)"
           :card-name="fourthFlopCard.name"
           :card-color="fourthFlopCard.color"
           :is-visible="fourthCard"
       />
-    </div>
-    <div  draggable="true"
-          @dragstart="startDrag($event,fifthFlopCard)">
-      <Card
+      <Card draggable="true"
+            @dragstart="startDrag($event,fifthFlopCard)"
           :card-name="fifthFlopCard.name"
           :card-color="fifthFlopCard.color"
           :is-visible="fifthCard"
       />
-    </div>
-       </div>
+  </div >
+  </div>
+  <button class="DeckOfCards__zone--button">test</button>
   </figure>
 
 </template>
@@ -164,91 +113,78 @@ let fifthCard = false;
 
 let count = 0;
 
-const onDrop = (event, list) =>{
-  count--;
-  console.log(count);
-  switch (count){
-    case 0:{
-      console.log(firstFlopCard.value);
-      cardNamesClub.value.push(firstFlopCard.value);
-      firstCard = false;
-      break;
-    }
-    case 1:{
-      cardNamesClub.value.push(secondFlopCard.value);
-      secondCard = false;
-      break;
-    }
-    case 2:{
-      cardNamesClub.value.push(thirdFlopCard.value);
-      thirdCard = false;
-      break;
-    }
-    case 3:{
-      cardNamesClub.value.push(fourthFlopCard.value);
-      fourthCard = false;
-      break;
-    }
-    case 4:{
-      cardNamesClub.value.push(fifthFlopCard.value);
-      fifthCard = false;
-      break;
-    }
-  }
-  cardNamesClub.value.sort( (a,b) => (a.id < b.id ? -1 : 1))
-
-}
-const onDropSelected = (event) =>{
-  console.log(count);
+const onDrop = (event) =>{
   const itemID = event.dataTransfer.getData('itemID');
   const item = cardNamesClub.value.find((item) => item.id == itemID) as cardType;
-  const newList = cardNamesClub.value.filter((item) => item.id != itemID) as cardTypeArray;
-  cardNamesClub.value = newList;
-
-  switch (count){
-    case 0:{
-      firstFlopCard.value = item;
-      firstCard = true;
-      break;
+  if(!item) {
+    count--;
+    switch (count) {
+      case 0: {
+        cardNamesClub.value.push(firstFlopCard.value);
+        firstCard = false;
+        break;
+      }
+      case 1: {
+        cardNamesClub.value.push(secondFlopCard.value);
+        secondCard = false;
+        break;
+      }
+      case 2: {
+        cardNamesClub.value.push(thirdFlopCard.value);
+        thirdCard = false;
+        break;
+      }
+      case 3: {
+        cardNamesClub.value.push(fourthFlopCard.value);
+        fourthCard = false;
+        break;
+      }
+      case 4: {
+        cardNamesClub.value.push(fifthFlopCard.value);
+        fifthCard = false;
+        break;
+      }
     }
-    case 1:{
-      secondFlopCard.value = item;
-      secondCard = true;
-      break;
-    }
-    case 2:{
-      thirdFlopCard.value = item;
-      thirdCard = true;
-      break;
-    }
-    case 3:{
-      fourthFlopCard.value = item;
-      fourthCard = true;
-      break;
-    }
-    case 4:{
-      fifthFlopCard.value = item;
-      fifthCard = true;
-      break;
-    }
-  }
-  count++
-}
-const segratedlist: Ref<cardTypeArray> = ref([])
-
-const segregateSelectedCard = (item) => {
-  if(segratedlist[0].id === 'start'){
-    segratedlist[0] = item;
-  }else {
-    let countSelectedElements = 0;
-    cardNamesClub.value.forEach((card) => {
-      if (card.list === 5)
-        countSelectedElements++;
-    })
-    //return countSelectedElements;
+    cardNamesClub.value.sort((a, b) => (a.id < b.id ? -1 : 1))
   }
 }
+const onDropSelected = (event) =>{
+  const itemID = event.dataTransfer.getData('itemID');
+  const item = cardNamesClub.value.find((item) => item.id == itemID) as cardType;
+  if(item) {
+    const newList = cardNamesClub.value.filter((item) => item.id != itemID) as cardTypeArray;
+    cardNamesClub.value = newList;
 
+    switch (count) {
+      case 0: {
+        firstFlopCard.value = item;
+        firstCard = true;
+        break;
+      }
+      case 1: {
+        secondFlopCard.value = item;
+        secondCard = true;
+        break;
+      }
+      case 2: {
+        thirdFlopCard.value = item;
+        thirdCard = true;
+        break;
+      }
+      case 3: {
+        fourthFlopCard.value = item;
+        fourthCard = true;
+        break;
+      }
+      case 4: {
+        fifthFlopCard.value = item;
+        fifthCard = true;
+        break;
+      }
+    }
+    count++
+  }
+}
 const startDrag = (event, item) => {
   event.dataTransfer.dropEffect = 'move';
   event.dataTransfer.effectAllowed = 'move';
@@ -307,25 +243,41 @@ let cardNamesClub = ref([
   {id:'49',name:'4',color:'HEART',list:4, mainId: "49"},
   {id:'50',name:'3',color:'HEART',list:4, mainId: "50"},
   {id:'51',name:'2',color:'HEART',list:4, mainId: "51"},
-
-
 ]);
 
 const getList = (list) => {
   return cardNamesClub.value.filter((item) => item.list == list);
 }
-const getList1 = () => {
-  return segratedlist.value
-}
 
 
 </script>
 <style lang="scss">
-.selectedCard{
-  display: inline-flex;
-  height: 55px;
-  width: 180px;
-  border: solid;
+.DeckOfCards{
+
+   &__rows{
+     display: flex;
+     justify-content: center;
+   }
+   &__zone{
+     right: 0;
+     position: relative;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100px;
+     width: 100%;
+     background-color: blanchedalmond;
+     margin-top: 20px;
+     &--selected{
+       display: inline-flex;
+
+     }
+     &--button{
+         width: 100%;
+
+         align-self: end;
+     }
+   }
 }
 
 ul {

@@ -4,4 +4,4 @@ import router from './router'
 import {createPinia} from "pinia";
 import ElementPlus from 'element-plus'
 
-createApp(App).use(ElementPlus).use(router).use(createPinia()).mount('#app')
+createApp(App).use(router).use(createPinia()).mount('#app')
