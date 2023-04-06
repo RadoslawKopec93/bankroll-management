@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     ArbitrageHeader: typeof import('./src/components/arbitrage-betting-calculator/arbitrage-header/arbitrage-header.vue')['default']
     Card: typeof import('./src/components/MainPageView/card/card.vue')['default']
     DeckOfCards: typeof import('./src/components/MainPageView/DeckOfCards/DeckOfCards.vue')['default']
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElRow: typeof import('element-plus/es')['ElRow']
     HeaderButton: typeof import('./src/components/header/header-button/header-button.vue')['default']

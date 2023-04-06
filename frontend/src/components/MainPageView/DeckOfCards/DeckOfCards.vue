@@ -89,21 +89,22 @@
       />
   </div >
   </div>
-  <button class="DeckOfCards__zone--button">test</button>
+  <el-button class="DeckOfCards__zone--button" @click="pushDeal">CONFIRM</el-button>
   </figure>
 
 </template>
 <script setup lang="ts">
 import Card from "@/components/MainPageView/card/card.vue";
 import {Ref, ref} from "vue";
+import {useCardComponentStore} from "@/components/MainPageView/store/CardComponentStore";
 type cardTypeArray = {id: string ,name: string,color:string,list:number, mainId: string}[]
-type cardType = {id: string ,name: string,color:string,list:number, mainId: string}
+export type cardType = {id: string ,name: string,color:string,list:number, mainId: string}
 
-const firstFlopCard = ref({id:'0',name:'A',color:'CLUB',list:1, mainId: "0"})
-const secondFlopCard = ref({id:'0',name:'A',color:'CLUB',list:1, mainId: "0"})
-const thirdFlopCard = ref({id:'0',name:'A',color:'CLUB',list:1, mainId: "0"})
-const fourthFlopCard = ref({id:'0',name:'A',color:'CLUB',list:1, mainId: "0"})
-const fifthFlopCard = ref({id:'0',name:'A',color:'CLUB',list:1, mainId: "0"})
+const firstFlopCard = ref({id:'0',name:'B',color:'CLUB',list:1, mainId: "0"})
+const secondFlopCard = ref({id:'0',name:'B',color:'CLUB',list:1, mainId: "0"})
+const thirdFlopCard = ref({id:'0',name:'B',color:'CLUB',list:1, mainId: "0"})
+const fourthFlopCard = ref({id:'0',name:'B',color:'CLUB',list:1, mainId: "0"})
+const fifthFlopCard = ref({id:'0',name:'B',color:'CLUB',list:1, mainId: "0"})
 
 let firstCard = false;
 let secondCard = false;
@@ -112,6 +113,17 @@ let fourthCard = false;
 let fifthCard = false;
 
 let count = 0;
+
+const pushDeal = () =>{
+  const store = useCardComponentStore();
+  if(firstFlopCard.value.name != 'b' && secondFlopCard.value.name != 'b' && thirdFlopCard.value.name != 'b') {
+    store.deal.length = 0;
+    store.deal.push(firstFlopCard.value);
+    store.deal.push(secondFlopCard.value);
+    store.deal.push(thirdFlopCard.value);
+    console.log(store.deal);
+  }
+}
 
 const onDrop = (event) =>{
   const itemID = event.dataTransfer.getData('itemID');
@@ -273,9 +285,15 @@ const getList = (list) => {
 
      }
      &--button{
-         width: 100%;
-
-         align-self: end;
+       width: 100%;
+       background-color: black;
+       color: white;
+       align-self: end;
+       font-weight: bold;
+       &:hover{
+         background-color: #cb2d06;
+         color: black;
+       }
      }
    }
 }

@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
-import {ref } from "vue";
+import {Ref, ref} from "vue";
 
 export const useCardComponentStore = defineStore("card",()=>{
-    const name = ref('');
-    const color = ref('');
+    const deal = ref([{id:'0',name:'B',color:'CLUB',list:1, mainId: "0"}])
+    return {deal};
 });
