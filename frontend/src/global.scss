@@ -4,12 +4,14 @@ $mainBackgroundColor: #ffffff;
 $sizeS: 5px;
 $sizeM: 10px;
 
-$spadeCard: "@/css/images/spade.png";
-$blueDiamondCard: "@/css/images/blueDiamond.png";
-$clubCard: "@/css/images/club.png";
-$heartCard: "@/css/images/heart.png";
+$spadeCard: "@/core/components/css/images/spade.png";
+$blueDiamondCard: "@/core/components/css/images/blueDiamond.png";
+$clubCard: "@/core/components/css/images/club.png";
+$heartCard: "@/core/components/css/images/heart.png";
 
 $diamondColor: #2A52BE;
 $clubColor: #008000;
 $spadeColor: #000000;
 $heartColor: #FF0000;
+
+@import "core/components/css/element-plus/import";

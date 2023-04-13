@@ -88,8 +88,13 @@
           :is-visible="fifthCard"
       />
   </div >
+    <div class="DeckOfCards__zone--input">
+      <input>
+
+    </div>
+
   </div>
-  <el-button class="DeckOfCards__zone--button" @click="pushDeal">CONFIRM</el-button>
+  <MyButton class="DeckOfCards__zone--button" @click="pushDeal">CONFIRM</MyButton>
   </figure>
 
 </template>
@@ -97,6 +102,7 @@
 import Card from "@/components/MainPageView/card/card.vue";
 import {Ref, ref} from "vue";
 import {useCardComponentStore} from "@/components/MainPageView/store/CardComponentStore";
+import { MyButton } from '@/core/components/element-plus-proxy'
 type cardTypeArray = {id: string ,name: string,color:string,list:number, mainId: string}[]
 export type cardType = {id: string ,name: string,color:string,list:number, mainId: string}
 
@@ -113,7 +119,6 @@ let fourthCard = false;
 let fifthCard = false;
 
 let count = 0;
-
 const pushDeal = () =>{
   const store = useCardComponentStore();
   if(firstFlopCard.value.name != 'b' && secondFlopCard.value.name != 'b' && thirdFlopCard.value.name != 'b') {
@@ -282,7 +287,10 @@ const getList = (list) => {
      margin-top: 20px;
      &--selected{
        display: inline-flex;
-
+     }
+     &--input{
+     display: flex;
+       justify-content: end;
      }
      &--button{
        width: 100%;

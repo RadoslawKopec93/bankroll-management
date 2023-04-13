@@ -5,13 +5,11 @@
 /* eslint-disable */
 
 import Header from './components/header/main-header.vue'
-import Hello2 from './components/Hello2'
 export default {
 
   name: "App",
   components:{
     Header,
-    Hello2
   },
   data() {
     return {
