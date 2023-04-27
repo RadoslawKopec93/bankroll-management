@@ -2,25 +2,13 @@
   <el-row>
     <el-col><MainHeader/></el-col>
   </el-row>
-  <el-row>
+  <el-row :gutter="5">
     <el-col :span="9"></el-col>
     <el-col :span="3">
-      <div class="ResultBox">
-        <button class="ResultBox__dropDownButton">{{ actionNameDropDown }}</button>
-        <div class="ResultBox__dropDownList" >
-          <button v-for="i in actionsArray" class="ResultBox__dropDownList--choice" @click="actionNameDropDownSet(i)">{{i}}</button>
-        </div>
-      </div>
-      <input class="ResultBox__input">
+        <DropDownList :is-action="true"></DropDownList>
     </el-col>
     <el-col :span="3">
-      <div class="ResultBox">
-        <button class="ResultBox__dropDownButton">{{ positionNameDropDown }}</button>
-        <div class="ResultBox__dropDownList" >
-          <button v-for="i in positionsArray" class="ResultBox__dropDownList--choice" @click="positionNameDropDownSet(i)">{{i}}</button>
-        </div>
-        <input class="ResultBox__input">
-      </div>
+        <DropDownList :is-action="false" @add="handleChange"></DropDownList>
     </el-col>
     <el-col :span="9" style="height: 500px;">
       <DeckOfCards/>
@@ -28,7 +16,7 @@
   </el-row>
   <el-row>
     <el-col :span="2">
-      <div class="ResultBox__actionsHeader">flop</div>
+      <div class="ResultBox__test__actionsHeader">flop</div>
     </el-col>
   </el-row>
   <el-row >
@@ -71,15 +59,26 @@ import DeckOfCards from "@/components/MainPageView/DeckOfCards/DeckOfCards.vue";
 import MainHeader from '@/components/header/main-header.vue';
 import {actions, positions} from "@/global/enums";
 import {computed, ref} from "vue";
+import DropDownList from "@/components/MainPageView/result-box-body/DropDownList.vue";
+
+const emit = defineEmits(['add'])
+
+const handleChange = (event) => {
+    console.log(event);
+}
 
 const store = useCardComponentStore();
 const router = useRouter();
 const actionNameDropDown = ref('action');
 const positionNameDropDown = ref('position');
-
+/*const addSelectedDropDownItem = (event) => {
+    emit('add',)
+}*/
 const actionsArray = [actions.call,actions.fold,actions.raise,actions.raise,actions.check]
 const positionsArray = [positions.sb,positions.bb,positions.utg,positions.utg1,positions.utg2,positions.mp1,
 positions.lj,positions.hj,positions.co,positions.btn]
+
+
 
 const firstActions = [
     {
@@ -155,30 +154,31 @@ const positionNameDropDownSet = (position) => {
 </script>
 <style lang="scss">
 .ResultBox {
-  position: relative;
-  display: inline-block;
-  border: none;
-  &:hover {
-    .ResultBox__dropDownList {
-      display: block;
-    }
-  }
-  &__dropDownButton {
-    background-color: black;
+   &__box{
+     position: relative;
+     display: inline-block;
+     border: none;
+     width: 100%;
+     margin-right: 5px;
+
+    &:hover {
+      .ResultBox__box--dropDownList {
+        display: block;
+      }
+   }
+  &--dropDownButton {
+    background-color: darkred;
     color: white;
     font-weight: bold;
     padding: 10px;
     font-size: 15px;
-    border: none;
+    border: black solid 2px;
     cursor: pointer;
-    text-transform: uppercase;
-    display: block;
     width: 100%;
   }
 
-  &__dropDownList {
+  &--dropDownList {
     position: absolute;
-    height: 120px;
     width: 100%;
     display: none;
 
@@ -188,18 +188,19 @@ const positionNameDropDownSet = (position) => {
       height: 40px;
       width: 100%;
       background-color: black;
-      display: flex;
+      /*   display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: center;*/
       cursor: pointer;
-      &:focus{
+
+      &:focus {
         background-color: white;
         color: black;
         transition: all .6s;
       }
     }
   }
-  &__actions {
+  &--actions {
     display: block;
     &--positions{
       display: flex;
@@ -213,7 +214,7 @@ const positionNameDropDownSet = (position) => {
       background-color: aqua;
     }
   }
-  &__actionsHeader{
+  &--actionsHeader{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -224,9 +225,16 @@ const positionNameDropDownSet = (position) => {
     margin-left: 50px;
     width: 100%;
   }
-  &__input{
-    margin-top: 10px;
-    margin-bottom: 10px;
+   }
+  &__functionality {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &--input{
+      width: 100%;
+    }
   }
+
 }
 </style>

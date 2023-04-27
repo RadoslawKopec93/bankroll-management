@@ -1,7 +1,7 @@
 import {Vue} from "vue-class-component";
 import Chart from "chart.js/auto";
 import {computed, defineComponent, reactive, ref, watch} from "vue";
-import ResultBox from "@/components/MainPageView/result-box/ResultBox.vue";
+import ResultBox from "@/components/MainPageView/result-box-body/ResultBox.vue";
 import Card from "@/components/MainPageView/card/card.vue";
 import axios from "axios";
 
