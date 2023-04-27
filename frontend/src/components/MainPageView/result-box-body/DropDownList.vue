@@ -32,10 +32,10 @@
 import {actions, positions} from "@/global/enums";
 import {computed, ref} from "vue";
 
-/*interface Props {
+interface Props {
     isAction: Boolean,
    // dropDownPositions: Boolean,
-}*/
+}
 
 const props = defineProps({
     isAction: Boolean
