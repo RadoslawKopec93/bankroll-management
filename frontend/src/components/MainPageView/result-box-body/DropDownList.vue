@@ -1,5 +1,7 @@
 <template>
-    <div v-if="isAction">
+    <el-row :gutter="5">
+        <el-col :span="10">
+    <div>
       <div class="DropDownList">
         <div class="DropDownList__box">
           <button class="DropDownList__box--dropDownButton">{{ dropDownName }}</button>
@@ -8,45 +10,45 @@
           </div>
         </div>
      <div class="DropDownList__functionality">
-        <input class="DropDownList__functionality--input">
-        <button class="DropDownList__functionality--button" @click="$emit('add', 2)">test</button>
+        <input v-if="showInput" v-model=actionValue class="DropDownList__functionality--input">
+        <button
+                class="DropDownList__functionality--button"
+                @click="$emit('send-action', {action: dropDownName, value: actionValue, position: positionNameDropDown})"
+        >
+            test
+        </button>
       </div>
       </div>
     </div>
-
-   <div v-if="!isAction">
+        </el-col>
+        <el-col :span="10">
+   <div >
        <div class="DropDownList__box">
-            <button class="DropDownList__box&#45;&#45;dropDownButton">{{ positionNameDropDown }}</button>
-            <div class="DropDownList__box&#45;&#45;dropDownList" >
+            <button class="DropDownList__box--dropDownButton">{{ positionNameDropDown }}</button>
+            <div class="DropDownList__box--dropDownList" >
                 <button v-for="i in positionsArray" class="DropDownList__box--dropDownList--choice" @click="setChoosenPosition(i)">{{i}}</button>
             </div>
         </div>
-        <div class="DropDownList__functionality">
-            <input class="DropDownList__functionality--input">
-            <button class="DropDownList__functionality--button" @click="$emit('add', 2)">test</button>
-        </div>
     </div>
+        </el-col>
+    </el-row>
 </template>
 
 <script setup lang="ts">
-import {actions, positions} from "@/global/enums";
-import {computed, ref} from "vue";
-
-interface Props {
-    isAction: Boolean,
-   // dropDownPositions: Boolean,
-}
+import { actions, positions } from "@/global/enums";
+import { computed, ref } from "vue";
 
 const props = defineProps({
     isAction: Boolean
 });
 
 
-const actionsArray = [actions.call,actions.fold,actions.raise,actions.raise,actions.check]
+const actionsArray = [actions.call,actions.fold,actions.raise,actions.bet,actions.check, actions.straddle]
 const positionsArray = [positions.sb,positions.bb,positions.utg,positions.utg1,positions.utg2,positions.mp1,
     positions.lj,positions.hj,positions.co,positions.btn]
 const dropDownName = ref('action');
 const positionNameDropDown = ref('position');
+const actionValue = ref(0);
 
 const setChoosenPosition = (value) => {
     positionNameDropDown.value = value;
@@ -55,6 +57,10 @@ const setChoosenPosition = (value) => {
 const setChoosenAction = (value) => {
     dropDownName.value = value;
 }
+
+const showInput = computed( ()=> {
+    return dropDownName.value === 'RAISE' || dropDownName.value === 'BET'? true : false;
+})
 
 
 </script>
@@ -116,7 +122,7 @@ const setChoosenAction = (value) => {
     align-items: center;
 
     &--input{
-      margin: 10px 0 10px 0;
+      margin: 10px 0 0 0;
       width: 95%;
       height: 20px;
       border: solid black 2px;
@@ -124,6 +130,7 @@ const setChoosenAction = (value) => {
     }
 
     &--button {
+      margin: 10px 0 0 0;
       border: solid black 2px;
       border-radius: 5px;
       width: 100%;

@@ -4,237 +4,93 @@
   </el-row>
   <el-row :gutter="5">
     <el-col :span="9"></el-col>
-    <el-col :span="3">
-        <DropDownList :is-action="true"></DropDownList>
-    </el-col>
-    <el-col :span="3">
-        <DropDownList :is-action="false" @add="handleChange"></DropDownList>
+    <el-col :span="6">
+        <DropDownList @send-action="assignAction"></DropDownList>
     </el-col>
     <el-col :span="9" style="height: 500px;">
       <DeckOfCards/>
     </el-col>
   </el-row>
   <el-row>
-    <el-col :span="2">
-      <div class="ResultBox__test__actionsHeader">flop</div>
-    </el-col>
-  </el-row>
-  <el-row >
-     <el-col :span="1">
-       <div class="ResultBox__actions">
-         <div class="ResultBox__actions--positions">{{positions.sb}}</div>
-         <div class="ResultBox__actions--positions">{{positions.bb}}</div>
-         <div class="ResultBox__actions--positions">{{positions.utg}}</div>
-         <div class="ResultBox__actions--positions">{{positions.utg1}}</div>
-         <div class="ResultBox__actions--positions">{{positions.utg2}}</div>
-         <div class="ResultBox__actions--positions">{{positions.mp1}}</div>
-         <div class="ResultBox__actions--positions">{{positions.lj}}</div>
-         <div class="ResultBox__actions--positions">{{positions.hj}}</div>
-         <div class="ResultBox__actions--positions">{{positions.co}}</div>
-         <div class="ResultBox__actions--positions">{{positions.btn}}</div>
-       </div>
-     </el-col>
-    <el-col :span="1">
-       <div class="ResultBox__actions" v-for="i in firstActions">
-         <div  class="ResultBox__actions--positions">
-           <span v-if="!i.folded">{{i.action}}</span>
-           <span v-else>-</span>
-         </div>
-       </div>
-    </el-col>
-    <el-col :span="1">
-      <div class="ResultBox__actions" v-for="i in firstActions">
-        <div class="ResultBox__actions--positions">
-          <span v-if="!i.folded || i.position === 'SB' || i.position === 'BB'">{{i.value}}</span>
-          <span v-else>-</span>
-        </div>
-      </div>
+    <el-col :span="24">
+        <button @click="changeStreet(streets.preflop)"> preflop</button>
+        <button @click="changeStreet(streets.flop)"> flop</button>
+        <button @click="changeStreet(streets.turn)"> turn</button>
+        <button @click="changeStreet(streets.river)"> river</button>
+        <ag-grid-vue
+                style="width: 900px; height: 500px"
+                class="ag-theme-alpine"
+                :columnDefs="columnDefs.value"
+                :rowData="rowData.value"
+                :defaultColDef="defaultColDef"
+                @grid-ready="onGridReady"
+        >
+        </ag-grid-vue>
     </el-col>
   </el-row>
 </template>
 <script setup lang="ts">
-import {useCardComponentStore} from "@/components/MainPageView/store/CardComponentStore";
-import {useRouter} from "vue-router";
 import DeckOfCards from "@/components/MainPageView/DeckOfCards/DeckOfCards.vue";
 import MainHeader from '@/components/header/main-header.vue';
-import {actions, positions} from "@/global/enums";
-import {computed, ref} from "vue";
+import { reactive, ref } from "vue";
 import DropDownList from "@/components/MainPageView/result-box-body/DropDownList.vue";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import { AgGridVue } from "ag-grid-vue3";
+import { streets } from "@/global/enums";
 
-const emit = defineEmits(['add'])
+const emit = defineEmits(['send-action'])
 
-const handleChange = (event) => {
-    console.log(event);
+const activeStreet = ref(streets.preflop);
+
+const gridApi = ref();
+const gridColumnApi = ref()
+const onGridReady = (params) => {
+    gridApi.value = params.api;
+    gridColumnApi.value = params.columnApi;
 }
 
-const store = useCardComponentStore();
-const router = useRouter();
-const actionNameDropDown = ref('action');
-const positionNameDropDown = ref('position');
-/*const addSelectedDropDownItem = (event) => {
-    emit('add',)
-}*/
-const actionsArray = [actions.call,actions.fold,actions.raise,actions.raise,actions.check]
-const positionsArray = [positions.sb,positions.bb,positions.utg,positions.utg1,positions.utg2,positions.mp1,
-positions.lj,positions.hj,positions.co,positions.btn]
+const pot = ref(3);
 
+const columnDefs = reactive({value:[
+        { headerName: "Street", field: "street" },
+        { headerName: "Position", field: "position" },
+        { headerName: "Action", field: "action" },
+        { headerName: "Value", field: "value" },
+        { headerName: "Pot", field: "pot"}
+    ],})
 
+const rowData = reactive({value:[
+        { street: activeStreet.value, position: "SB", action: "BET", value: 1, pot: 1 },
+        { street: activeStreet.value, position: "BB", action: "BET", value: 2, pot: 3 },
+    ],})
 
-const firstActions = [
-    {
-      action: actions.sb,
-      position: positions.sb,
-      value: 1,
-      folded: true,
-    },
-  {
-    action: actions.bb,
-    position: positions.bb,
-    value: 2,
-    folded: true,
-  },
-  {
-    action: actions.fold,
-    position: positions.utg,
-    value: 0,
-    folded: true,
-  },
-  {
-    action: actions.fold,
-    position: positions.utg1,
-    value: 0,
-    folded: true,
-  },
-  {
-    action: actions.fold,
-    position: positions.utg2,
-    value: 0,
-    folded: true,
-  },
-  {
-    action: actions.fold,
-    position: positions.mp1,
-    value: 0,
-    folded: true,
-  },
-  {
-    action: actions.fold,
-    position: positions.lj,
-    value: 0,
-    folded: true,
-  },
-  {
-    action: actions.fold,
-    position: positions.hj,
-    value: 0,
-    folded: true,
-  },
-  {
-    action: actions.raise,
-    position: positions.co,
-    value: 6,
-    folded: false,
-  },
-  {
-    action: actions.call,
-    position: positions.btn,
-    value: 6,
-    folded: false,
-  }
-]
-
-const actionNameDropDownSet = (action) =>{
-   actionNameDropDown.value = action;
+const changeStreet = (street) => {
+    activeStreet.value = street;
 }
+const defaultColDef = {
+    sortable: true,
+    filter: true,
+    flex: 1
+};
 
-const positionNameDropDownSet = (position) => {
-  positionNameDropDown.value = position;
+const assignAction = (event) => {
+    pot.value += parseInt(event.value);
+    const newItems = [{
+        street: activeStreet.value,
+        position: event.position,
+        action: event.action,
+        value: event.value,
+        pot: pot.value
+    }]
+    gridApi.value.applyTransaction({
+        add: newItems,
+    });
 }
 
 </script>
 <style lang="scss">
 .ResultBox {
-   &__box{
-     position: relative;
-     display: inline-block;
-     border: none;
-     width: 100%;
-     margin-right: 5px;
-
-    &:hover {
-      .ResultBox__box--dropDownList {
-        display: block;
-      }
-   }
-  &--dropDownButton {
-    background-color: darkred;
-    color: white;
-    font-weight: bold;
-    padding: 10px;
-    font-size: 15px;
-    border: black solid 2px;
-    cursor: pointer;
-    width: 100%;
-  }
-
-  &--dropDownList {
-    position: absolute;
-    width: 100%;
-    display: none;
-
-    &--choice {
-      color: white;
-      border: none;
-      height: 40px;
-      width: 100%;
-      background-color: black;
-      /*   display: flex;
-      align-items: center;
-      justify-content: center;*/
-      cursor: pointer;
-
-      &:focus {
-        background-color: white;
-        color: black;
-        transition: all .6s;
-      }
-    }
-  }
-  &--actions {
-    display: block;
-    &--positions{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 5px;
-      border: black;
-      text-transform: uppercase;
-      width: 50px;
-      height: 30px;
-      background-color: aqua;
-    }
-  }
-  &--actionsHeader{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: red;
-    color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-    margin-left: 50px;
-    width: 100%;
-  }
-   }
-  &__functionality {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    &--input{
-      width: 100%;
-    }
-  }
 
 }
 </style>

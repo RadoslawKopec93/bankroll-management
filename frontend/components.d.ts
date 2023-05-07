@@ -12,7 +12,7 @@ declare module '@vue/runtime-core' {
     ArbitrageBettingCalculator: typeof import('./src/components/arbitrage-betting-calculator/arbitrage-betting-calculator.vue')['default']
     ArbitrageHeader: typeof import('./src/components/arbitrage-betting-calculator/arbitrage-header/arbitrage-header.vue')['default']
     Card: typeof import('./src/components/MainPageView/card/card.vue')['default']
-    DayResult: typeof import('./src/components/MainPageView/result-box/DayResult.vue')['default']
+    DayResult: typeof import('./src/components/MainPageView/result-box-body/DayResult.vue')['default']
     DeckOfCards: typeof import('./src/components/MainPageView/DeckOfCards/DeckOfCards.vue')['default']
     DropDownList: typeof import('./src/components/MainPageView/result-box-body/DropDownList.vue')['default']
     ElCol: typeof import('element-plus/es')['ElCol']

@@ -12,7 +12,8 @@ export enum actions {
     raise = "RAISE",
     call = "CALL",
     sb = "SB",
-    bb = "BB"
+    bb = "BB",
+    straddle = "STRADDLE",
 }
 
 export enum positions {
@@ -26,4 +27,11 @@ export enum positions {
     hj = "HJ",
     co = "CO",
     btn = "BTN"
+}
+
+export enum streets {
+    preflop = "PREFLOP",
+    flop = "FLOP",
+    turn = "TURN",
+    river = "RIVER",
 }
