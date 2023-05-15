@@ -1,5 +1,5 @@
 <template>
-  <ElButton :id="buttonName">
+  <ElButton class="PkButton">
     <slot/>
   </ElButton>
 </template>
@@ -15,11 +15,11 @@ const props = defineProps({
 });
 </script>
 <style lang="scss">
-#result{
-  cursor: pointer;
-  background: red;
-  width: 100px;
-  height: 80px;
-  margin-left:0;
+.PkButton {
+  &.el-button {
+    border: black solid 2px;
+    font-weight: bold;
+    color: black;
+  }
 }
 </style>

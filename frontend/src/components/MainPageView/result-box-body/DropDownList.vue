@@ -11,12 +11,12 @@
         </div>
      <div class="DropDownList__functionality">
         <input v-if="showInput" v-model=actionValue class="DropDownList__functionality--input">
-        <button
+        <PkButton
                 class="DropDownList__functionality--button"
                 @click="$emit('send-action', {action: dropDownName, value: actionValue, position: positionNameDropDown})"
         >
             test
-        </button>
+        </PkButton>
       </div>
       </div>
     </div>
@@ -24,33 +24,62 @@
         <el-col :span="10">
    <div >
        <div class="DropDownList__box">
-            <button class="DropDownList__box--dropDownButton">{{ positionNameDropDown }}</button>
-            <div class="DropDownList__box--dropDownList" >
-                <button v-for="i in positionsArray" class="DropDownList__box--dropDownList--choice" @click="setChoosenPosition(i)">{{i}}</button>
+            <button @click="calculateDisplayList" class="DropDownList__box--dropDownButton">{{ positionNameDropDown }}</button>
+            <div v-show="showList" class="DropDownList__box--dropDownList" >
+                <div v-for="i in store.positionsMap.keys()">
+                  <button v-show="store.positionsMap.get(i)" class="DropDownList__box--dropDownList--choice" @click="setChoosenPosition(i)">{{i}}</button>
+                </div>
             </div>
         </div>
     </div>
         </el-col>
     </el-row>
+
 </template>
 
 <script setup lang="ts">
 import { actions, positions } from "@/global/enums";
 import { computed, ref } from "vue";
+import PkButton from "@/core/components/element-plus/PkButton.vue";
+import {useResultReportStore} from "@/components/MainPageView/store/ResultReport";
+
+const smallBlind= ref(true);
+const bigBlind = ref(true);
+const underTheGun = ref(true)
+const underTheGun1 = ref(true)
+const underTheGun2 = ref(true)
+const middlePosition = ref(true)
+const lowJack = ref(true)
+const highJack = ref(true)
+const cutOff = ref(true)
+const button = ref(true)
 
 const props = defineProps({
     isAction: Boolean
 });
 
+const store = useResultReportStore();
 
+const showList = ref(false);
+
+const calculateDisplayList = computed( ()=>{
+    showList.value = !showList.value;
+})
 const actionsArray = [actions.call,actions.fold,actions.raise,actions.bet,actions.check, actions.straddle]
-const positionsArray = [positions.sb,positions.bb,positions.utg,positions.utg1,positions.utg2,positions.mp1,
+const positionsArray = [
+    positions.sb,positions.bb,positions.utg,positions.utg1,positions.utg2,positions.mp1,
     positions.lj,positions.hj,positions.co,positions.btn]
+const a = computed( () =>{
+
+})
 const dropDownName = ref('action');
 const positionNameDropDown = ref('position');
 const actionValue = ref(0);
 
+
+
 const setChoosenPosition = (value) => {
+    showList.value = !showList.value
     positionNameDropDown.value = value;
 }
 
@@ -131,13 +160,6 @@ const showInput = computed( ()=> {
 
     &--button {
       margin: 10px 0 0 0;
-      border: solid black 2px;
-      border-radius: 5px;
-      width: 100%;
-      height: 30px;
-      text-transform: uppercase;
-      font-weight: bold;
-      cursor: pointer;
 
       &:hover {
         cursor: pointer;
