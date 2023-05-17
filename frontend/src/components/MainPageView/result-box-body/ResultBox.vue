@@ -46,6 +46,7 @@
                 :rowData="rowData.value"
                 :defaultColDef="defaultColDef"
                 @grid-ready="onGridReady"
+                rowSelection='multiple'
         >
         </ag-grid-vue>
     </el-col>
@@ -79,9 +80,10 @@ const addBlinds = () => {
 }
 
 const revertAction = () => {
-    rowData.value.length = rowData.value.length - 1
-    gridApi.value.setRowData(rowData)
-}
+    const selectedData = gridApi.value.getSelectedRows();
+    const res = gridApi.value.applyTransaction({ remove: selectedData });
+    //printResult(res);
+};
 
 const smallBlind = computed( {
         get:() => store.positionsMap.get("SB"),
