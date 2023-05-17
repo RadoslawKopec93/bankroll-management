@@ -1,18 +1,18 @@
 <template>
-  <main class="LoginPage">
+<!--  <main class="LoginPage">
     <section class="LoginPage__modal">
       <MyForm label-height="auto" class="LoginPage__form">
-        <MyFormItem prop="name" label="Username" :margin-bottom="0" class="LoginPage__form--formItem"></MyFormItem>
+        <MyFormItem prop="name" label="Username" :margin-bottom="0" class="LoginPage__form&#45;&#45;formItem"></MyFormItem>
         <MyInput v-model="userName"/>
-        <MyFormItem prop="password" label="Password" :margin-bottom="0" class="LoginPage__form--formItem"></MyFormItem>
+        <MyFormItem prop="password" label="Password" :margin-bottom="0" class="LoginPage__form&#45;&#45;formItem"></MyFormItem>
         <MyInput v-model="password"/>
-        <MyButton @click="test" class="LoginPage__form--button">Login</MyButton>
+        <MyButton @click="test" class="LoginPage__form&#45;&#45;button">Login</MyButton>
       </MyForm>
     </section>
-  </main>
+  </main>-->
 </template>
 <script setup lang="ts">
-import { MyButton, MyForm, MyFormItem, MyInput } from '@/core/components/element-plus-proxy'
+import {  MyForm, MyFormItem, MyInput } from '@/core/components/element-plus-proxy'
 import {ref} from "vue";
 import {useLoginPageStore} from "@/components/LoginPage/store/LoginPageStore";
 import { useRouter } from "vue-router";

@@ -4,8 +4,8 @@ import {positions} from "@/global/enums";
 
 export const useResultReportStore = defineStore("card",()=> {
     const positionsMap = ref(new Map<string,boolean>([
-        [positions.sb,false],
-        [positions.bb,false],
+        [positions.sb,true],
+        [positions.bb,true],
         [positions.utg, false],
         [positions.utg1, false],
         [positions.utg2, false],

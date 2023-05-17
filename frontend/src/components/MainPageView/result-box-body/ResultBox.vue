@@ -8,8 +8,11 @@
     </el-col>
       <el-col :span="2">
           <el-row>
+              <PkButton @click="addBlinds">ADD BLINDS</PkButton>
               <PkCheckBox v-model="smallBlind">Small Blind</PkCheckBox>
+              <PkInput v-model="smallBlindStartValue" v-if="showInitialBlindInputs" placeholder="Small Blind"></PkInput>
               <PkCheckBox v-model="bigBlind">Big Blind</PkCheckBox>
+              <PkInput v-model="bigBlindStartValue" v-if="showInitialBlindInputs" placeholder="Big Blind"></PkInput>
               <PkCheckBox v-model="underTheGun">Under the Gun</PkCheckBox>
               <PkCheckBox v-model="underTheGun1">Under the Gun + 1</PkCheckBox>
               <PkCheckBox v-model="underTheGun2">Under the Gun + 2</PkCheckBox>
@@ -24,7 +27,7 @@
         <DropDownList @send-action="assignAction"></DropDownList>
     </el-col>
     <el-col :span="9" style="height: 500px;">
-      <DeckOfCards/>
+<!--      <DeckOfCards/>-->
     </el-col>
   </el-row>
   <el-row>
@@ -34,6 +37,7 @@
           <PkButton @click="changeStreet(streets.flop)"> flop</PkButton>
           <PkButton @click="changeStreet(streets.turn)"> turn</PkButton>
           <PkButton @click="changeStreet(streets.river)"> river</PkButton>
+          <PkButton @click="revertAction">revert</PkButton>
         </div>
         <ag-grid-vue
                 style="width: 900px; height: 500px"
@@ -56,13 +60,29 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridVue } from "ag-grid-vue3";
 import { streets } from "@/global/enums";
-import { PkButton, PkCheckBox } from "@/core/components/element-plus-proxy";
+import { PkButton, PkCheckBox, PkInput } from "@/core/components/element-plus-proxy";
 import {useResultReportStore} from "@/components/MainPageView/store/ResultReport";
 import {c} from "chart.js/dist/chunks/helpers.core";
 
 const emit = defineEmits(['send-action'])
 
 const store = useResultReportStore();
+
+const smallBlindStartValue = ref();
+const bigBlindStartValue = ref();
+const showInitialBlindInputs = ref(true)
+
+const addBlinds = () => {
+    rowData.value[0].value = rowData.value[0].pot = smallBlindStartValue.value;
+    rowData.value[1].value = rowData.value[1].pot = bigBlindStartValue.value;
+    pot.value = parseInt(smallBlindStartValue.value) + parseInt(bigBlindStartValue.value);
+}
+
+const revertAction = () => {
+    rowData.value.length = rowData.value.length - 1
+    gridApi.value.setRowData(rowData)
+}
+
 const smallBlind = computed( {
         get:() => store.positionsMap.get("SB"),
         set: v => store.positionsMap.set("SB", v)
@@ -106,7 +126,7 @@ const button = computed( {
 })
 
 const activeStreet = ref(streets.preflop);
-const pot = ref(3);
+const pot = ref<number>(0);
 const gridApi = ref();
 const gridColumnApi = ref()
 const onGridReady = (params) => {
@@ -123,8 +143,8 @@ const columnDefs = reactive({value:[
     ],})
 
 const rowData = reactive({value:[
-        { street: activeStreet.value, position: "SB", action: "BET", value: 1, pot: 1 },
-        { street: activeStreet.value, position: "BB", action: "BET", value: 2, pot: 3 },
+        { street: activeStreet.value, position: "SB", action: "BET", value: smallBlindStartValue.value, pot: 0 },
+        { street: activeStreet.value, position: "BB", action: "BET", value: bigBlindStartValue.value, pot: 0 },
     ]
 })
 
@@ -141,9 +161,9 @@ const defaultColDef = {
 
 
 const assignAction = (event) => {
-    if(event.action === 'CHECK' || event.a === 'FOLD')
-      pot.value += parseInt(event.value);
-
+    if(event.action !== 'CHECK' || event.a !== 'FOLD') {
+        pot.value += parseInt(event.value);
+    }
     const newItems = [{
         street: activeStreet.value,
         position: event.position,

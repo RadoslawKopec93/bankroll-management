@@ -3,7 +3,7 @@ import {ref} from "vue";
 import { useRouter } from "vue-router";
 
 export const useLoginPageStore = defineStore("login",()=>{
-
+/*
     const token = ref('');
     const router = useRouter();
 
@@ -24,12 +24,12 @@ export const useLoginPageStore = defineStore("login",()=>{
             },
         })
         return response.json();
-           /* .then((response) => response.json())
+           /!* .then((response) => response.json())
             .then((json) => {
                 if(json.token){
                     router.push('/');
                 }
-            });*/
+            });*!/
     }
-    return {token,setToken,login}
+    return {token,setToken,login}*/
 });

@@ -3,6 +3,7 @@ export {
     ElForm as MyForm,
     ElFormItem as MyFormItem,
     ElInput as MyInput,
-    ElCheckbox as PkCheckBox
+    ElCheckbox as PkCheckBox,
+    ElInput as PkInput,
 } from 'element-plus';
 
