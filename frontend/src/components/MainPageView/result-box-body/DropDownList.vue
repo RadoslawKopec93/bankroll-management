@@ -41,18 +41,7 @@
 import { actions, positions } from "@/global/enums";
 import { computed, ref } from "vue";
 import PkButton from "@/core/components/element-plus/PkButton.vue";
-import {useResultReportStore} from "@/components/MainPageView/store/ResultReport";
-
-const smallBlind= ref(true);
-const bigBlind = ref(true);
-const underTheGun = ref(true)
-const underTheGun1 = ref(true)
-const underTheGun2 = ref(true)
-const middlePosition = ref(true)
-const lowJack = ref(true)
-const highJack = ref(true)
-const cutOff = ref(true)
-const button = ref(true)
+import { useResultReportStore } from "@/components/MainPageView/store/ResultReport";
 
 const props = defineProps({
     isAction: Boolean
@@ -88,7 +77,7 @@ const setChoosenAction = (value) => {
 }
 
 const showInput = computed( ()=> {
-    return dropDownName.value === 'RAISE' || dropDownName.value === 'BET'? true : false;
+    return dropDownName.value === 'RAISE' || dropDownName.value === 'BET'
 })
 
 

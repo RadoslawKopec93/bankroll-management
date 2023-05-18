@@ -3,6 +3,7 @@ import {Ref, ref} from "vue";
 import {positions} from "@/global/enums";
 
 export const useResultReportStore = defineStore("card",()=> {
+    const lastBetOrRaise = ref();
     const positionsMap = ref(new Map<string,boolean>([
         [positions.sb,true],
         [positions.bb,true],
@@ -48,6 +49,7 @@ export const useResultReportStore = defineStore("card",()=> {
       highJack,
       cutOff,
       button,
-      positionsArray
+      positionsArray,
+      lastBetOrRaise
   }
 });
