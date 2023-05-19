@@ -16,6 +16,7 @@ export const useResultReportStore = defineStore("card",()=> {
         [positions.co, false],
         [positions.btn,false]]
     ))
+
     const smallBlind = ref();
     const bigBlind = ref();
     const underTheGun = ref();

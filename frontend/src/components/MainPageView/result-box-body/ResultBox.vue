@@ -8,11 +8,11 @@
     </el-col>
       <el-col :span="2">
           <el-row>
-              <PkButton @click="addBlinds">ADD BLINDS</PkButton>
+<!--              <PkButton @click="addBlinds">ADD BLINDS</PkButton>-->
               <PkCheckBox v-model="smallBlind">Small Blind</PkCheckBox>
-              <PkInput v-model="smallBlindStartValue" v-if="showInitialBlindInputs" placeholder="Small Blind"></PkInput>
+              <PkInput v-model="smallBlindStartValue" @input="addBlinds()" v-if="showInitialBlindInputs" placeholder="Small Blind"></PkInput>
               <PkCheckBox v-model="bigBlind">Big Blind</PkCheckBox>
-              <PkInput v-model="bigBlindStartValue" v-if="showInitialBlindInputs" placeholder="Big Blind"></PkInput>
+             <!--<PkInput v-model="bigBlindStartValue"  v-if="showInitialBlindInputs" placeholder="Big Blind"></PkInput>-->
               <PkCheckBox v-model="underTheGun">Under the Gun</PkCheckBox>
               <PkCheckBox v-model="underTheGun1">Under the Gun + 1</PkCheckBox>
               <PkCheckBox v-model="underTheGun2">Under the Gun + 2</PkCheckBox>
@@ -73,17 +73,35 @@ const bigBlindStartValue = ref();
 const showInitialBlindInputs = ref(true)
 
 const addBlinds = () => {
+/*    switch(blind){
+        case 'small':{
+            rowData.value[0].value = rowData.value[0].pot = smallBlindStartValue.value;
+            break;
+        }
+        case 'big':{
+          //  if(smallBlindStartValue.value) {
+                rowData.value[1].pot = parseInt(smallBlindStartValue.value) + parseInt(bigBlindStartValue.value);
+                pot.value = parseInt(smallBlindStartValue.value) + parseInt(bigBlindStartValue.value);
+                store.lastBetOrRaise = parseInt(bigBlindStartValue.value);
+         //   }
+            break;
+        }
+        default:{
+            break;
+        }
+    }*/
     rowData.value[0].value = rowData.value[0].pot = smallBlindStartValue.value;
-    rowData.value[1].value = parseInt(bigBlindStartValue.value);
-    rowData.value[1].pot = parseInt(smallBlindStartValue.value) + parseInt(bigBlindStartValue.value);
-    pot.value = parseInt(smallBlindStartValue.value) + parseInt(bigBlindStartValue.value);
-    store.lastBetOrRaise = parseInt(bigBlindStartValue.value);
+  /*  rowData.value[1].value = parseInt(bigBlindStartValue.value);
+    rowData.value[1].pot = parseInt(smallBlindStartValue.value) + parseInt(bigBlindStartValue.value);*/
+    pot.value = parseInt(smallBlindStartValue.value);
+    store.lastBetOrRaise = parseInt(smallBlindStartValue.value);
 }
 
 const revertAction = () => {
     const selectedData = gridApi.value.getSelectedRows();
-    const res = gridApi.value.applyTransaction({ remove: selectedData });
+    gridApi.value.applyTransaction({ remove: selectedData });
 };
+
 
 const smallBlind = computed( {
         get:() => store.positionsMap.get("SB"),
@@ -176,7 +194,7 @@ const columnDefs = reactive({value:[
 
 const rowData = reactive({value:[
         { street: activeStreet.value, position: "SB", action: "BET", value: smallBlindStartValue.value, pot: 0 },
-        { street: activeStreet.value, position: "BB", action: "BET", value: bigBlindStartValue.value, pot: 0 },
+     //   { street: activeStreet.value, position: "BB", action: "BET", value: bigBlindStartValue.value, pot: 0 },
     ]
 })
 
