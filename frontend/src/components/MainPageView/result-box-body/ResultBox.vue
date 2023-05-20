@@ -7,25 +7,27 @@
 
     </el-col>
       <el-col :span="2">
-          <el-row>
-<!--              <PkButton @click="addBlinds">ADD BLINDS</PkButton>-->
-              <PkCheckBox v-model="smallBlind">Small Blind</PkCheckBox>
-              <PkInput v-model="smallBlindStartValue" @input="addBlinds()" v-if="showInitialBlindInputs" placeholder="Small Blind"></PkInput>
-              <PkCheckBox v-model="bigBlind">Big Blind</PkCheckBox>
-             <!--<PkInput v-model="bigBlindStartValue"  v-if="showInitialBlindInputs" placeholder="Big Blind"></PkInput>-->
-              <PkCheckBox v-model="underTheGun">Under the Gun</PkCheckBox>
-              <PkCheckBox v-model="underTheGun1">Under the Gun + 1</PkCheckBox>
-              <PkCheckBox v-model="underTheGun2">Under the Gun + 2</PkCheckBox>
-              <PkCheckBox v-model="middlePosition">Middle Position </PkCheckBox>
-              <PkCheckBox v-model="lowJack">Low Jack</PkCheckBox>
-              <PkCheckBox v-model="highJack">High Jack</PkCheckBox>
-              <PkCheckBox v-model="cutOff">Cut Off</PkCheckBox>
-              <PkCheckBox v-model="button">Button</PkCheckBox>
+          <el-row >
+              <PkCheckBox v-model="showPositionInDropdown.SB" @change="changingDropdownListValues('SB')">Small Blind</PkCheckBox>
+              <PkCheckBox v-model="showPositionInDropdown.BB" @change="changingDropdownListValues('BB')">Big Blind</PkCheckBox>
+              <PkCheckBox v-model="showPositionInDropdown.UTG" @change="changingDropdownListValues('UTG')">Under the Gun</PkCheckBox>
+              <PkCheckBox v-model="showPositionInDropdown.UTG1" @change="changingDropdownListValues('UTG1')">Under the Gun + 1</PkCheckBox>
+              <PkCheckBox v-model="showPositionInDropdown.UTG2" @change="changingDropdownListValues('UTG2')">Under the Gun + 2</PkCheckBox>
+              <PkCheckBox v-model="showPositionInDropdown.MP" @change="changingDropdownListValues('MP')">Middle Position </PkCheckBox>
+              <PkCheckBox v-model="showPositionInDropdown.LJ" @change="changingDropdownListValues('LJ')">Low Jack</PkCheckBox>
+              <PkCheckBox v-model="showPositionInDropdown.HJ" @change="changingDropdownListValues('HJ')">High Jack</PkCheckBox>
+              <PkCheckBox v-model="showPositionInDropdown.CO" @change="changingDropdownListValues('CO')">Cut Off</PkCheckBox>
+              <PkCheckBox v-model="showPositionInDropdown.BTN" @change="changingDropdownListValues('BTN')">Button</PkCheckBox>
           </el-row>
       </el-col>
-    <el-col :span="6">
-        <DropDownList @send-action="assignAction"></DropDownList>
+    <el-col :span="3">
+        <DropDownList @selectedItem="setAction" emit-name="selectedItem" :items="dropdownItemsActions" :button-name="action"></DropDownList>
+        <input v-model="playerBet">
+        <button @click="assignAction">ADD</button>
     </el-col>
+      <el-col :span="3">
+          <DropDownList @selectedItem1="setPosition" emit-name="selectedItem1" :items="dropdownItemsPositions" :button-name="position"></DropDownList>
+      </el-col>
     <el-col :span="9" style="height: 500px;">
 <!--      <DeckOfCards/>-->
     </el-col>
@@ -56,129 +58,80 @@
 import DeckOfCards from "@/components/MainPageView/DeckOfCards/DeckOfCards.vue";
 import MainHeader from '@/components/header/main-header.vue';
 import { computed, reactive, ref } from "vue";
-import DropDownList from "@/components/MainPageView/result-box-body/DropDownList.vue";
+import DropDownList from "@/components/MainPageView/result-box-body/ModifiableDropDownList.vue";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridVue } from "ag-grid-vue3";
-import { streets } from "@/global/enums";
+import {positions, streets} from "@/global/enums";
 import { PkButton, PkCheckBox, PkInput } from "@/core/components/element-plus-proxy";
-import { useResultReportStore } from "@/components/MainPageView/store/ResultReport";
+import { useResultReportStore } from "@/components/MainPageView/store/ResultBoxStore";
 
-const emit = defineEmits(['send-action'])
-
+const emit = defineEmits(['selectedItem'])
 const store = useResultReportStore();
 
-const smallBlindStartValue = ref();
-const bigBlindStartValue = ref();
-const showInitialBlindInputs = ref(true)
-
-const addBlinds = () => {
-/*    switch(blind){
-        case 'small':{
-            rowData.value[0].value = rowData.value[0].pot = smallBlindStartValue.value;
-            break;
-        }
-        case 'big':{
-          //  if(smallBlindStartValue.value) {
-                rowData.value[1].pot = parseInt(smallBlindStartValue.value) + parseInt(bigBlindStartValue.value);
-                pot.value = parseInt(smallBlindStartValue.value) + parseInt(bigBlindStartValue.value);
-                store.lastBetOrRaise = parseInt(bigBlindStartValue.value);
-         //   }
-            break;
-        }
-        default:{
-            break;
-        }
-    }*/
-    rowData.value[0].value = rowData.value[0].pot = smallBlindStartValue.value;
-  /*  rowData.value[1].value = parseInt(bigBlindStartValue.value);
-    rowData.value[1].pot = parseInt(smallBlindStartValue.value) + parseInt(bigBlindStartValue.value);*/
-    pot.value = parseInt(smallBlindStartValue.value);
-    store.lastBetOrRaise = parseInt(smallBlindStartValue.value);
+const activeStreet = ref(streets.preflop);
+const pot = ref(0);
+const gridApi = ref();
+const gridColumnApi = ref()
+const playerBet = ref();
+const action = ref('ACTIONS');
+const position = ref('POSITIONS')
+const showPositionInDropdown = ref({
+    SB: true,
+    BB: true,
+    UTG: false,
+    UTG1: false,
+    UTG2: false,
+    MP: false,
+    LJ: false,
+    HJ: false,
+    CO: false,
+    BTN: false,
+})
+const positionsMap = ref(new Map<string,boolean>([
+    [positions.sb,true],
+    [positions.bb,true],
+    [positions.utg, false],
+    [positions.utg1, false],
+    [positions.utg2, false],
+    [positions.mp1, false],
+    [positions.lj, false],
+    [positions.hj, false],
+    [positions.co, false],
+    [positions.btn,false]]
+))
+const setAction = (event) =>{
+    action.value = event;
 }
+const setPosition = (event) =>{
+    position.value = event;
+}
+const changingDropdownListValues = (item: string) => {
+    if(positionsMap.value.get(item)){
+        removeDropdownItem(item);
+        positionsMap.value.set(item,false);
+    }else{
+        positionsMap.value.set(item,true);
+        dropdownItemsPositions.value.push(item);
+    }
+}
+const removeDropdownItem = (item: string) => {
+    const index = dropdownItemsPositions.value.indexOf(item)
+    if (index !== -1) {
+        dropdownItemsPositions.value.splice(index, 1);
+    }
+}
+const dropdownItemsActions = ref(["CALL","CHECK","RAISE","FOLD","STRADDLE","BET"])
+const dropdownItemsPositions = ref(["SB","BB"])
 
 const revertAction = () => {
     const selectedData = gridApi.value.getSelectedRows();
     gridApi.value.applyTransaction({ remove: selectedData });
 };
 
-
-const smallBlind = computed( {
-        get:() => store.positionsMap.get("SB"),
-        set: v => {
-            if(typeof v === 'boolean')
-            store.positionsMap.set("SB", v)
-        }
-})
-
-const bigBlind = computed( {
-    get:() => store.positionsMap.get("BB"),
-    set: v => {
-        if(typeof v === 'boolean')
-        store.positionsMap.set("BB", v)
-    }
-})
-const underTheGun = computed( {
-    get:() => store.positionsMap.get("UTG"),
-    set: v => {
-        if(typeof v === 'boolean')
-        store.positionsMap.set("UTG", v)
-    }
-})
-const underTheGun1 = computed( {
-    get:() => store.positionsMap.get("UTG1"),
-    set: v => {
-        if(typeof v === 'boolean')
-        store.positionsMap.set("UTG1", v)
-    }
-})
-const underTheGun2 = computed( {
-    get:() => store.positionsMap.get("UTG2"),
-    set: v => {
-        if(typeof v === 'boolean')
-        store.positionsMap.set("UTG2", v)
-    }
-})
-const middlePosition = computed( {
-    get:() => store.positionsMap.get("MP"),
-    set: v => {
-        if(typeof v === 'boolean')
-        store.positionsMap.set("MP", v)
-    }
-})
-const lowJack = computed( {
-    get:() => store.positionsMap.get("LJ"),
-    set: v => {
-        if(typeof v === 'boolean')
-        store.positionsMap.set("LJ", v)
-    }
-})
-const highJack = computed( {
-    get:() => store.positionsMap.get("HJ"),
-    set: v => {
-        if(typeof v === 'boolean')
-        store.positionsMap.set("HJ", v)
-    }
-})
-const cutOff = computed( {
-    get:() => store.positionsMap.get("CO"),
-    set: v => {
-        if(typeof v === 'boolean')
-        store.positionsMap.set("CO", v)
-    }
-})
-const button = computed( {
-    get:() => store.positionsMap.get("BTN"),
-    set: v => {
-        if(typeof v === 'boolean')
-        store.positionsMap.set("BTN", v)
-    }
-})
-
-const activeStreet = ref(streets.preflop);
-const pot = ref(0);
-const gridApi = ref();
-const gridColumnApi = ref()
+const changeStreet = (street) => {
+    activeStreet.value = street;
+}
 const onGridReady = (params) => {
     gridApi.value = params.api;
     gridColumnApi.value = params.columnApi;
@@ -192,17 +145,8 @@ const columnDefs = reactive({value:[
         { headerName: "Pot", field: "pot"}
     ],})
 
-const rowData = reactive({value:[
-        { street: activeStreet.value, position: "SB", action: "BET", value: smallBlindStartValue.value, pot: 0 },
-     //   { street: activeStreet.value, position: "BB", action: "BET", value: bigBlindStartValue.value, pot: 0 },
-    ]
-})
+const rowData = reactive({value:[]})
 
-
-
-const changeStreet = (street) => {
-    activeStreet.value = street;
-}
 const defaultColDef = {
     sortable: true,
     filter: true,
@@ -210,26 +154,26 @@ const defaultColDef = {
 };
 
 
-const assignAction = (event) => {
-    if(event.action === 'BET' || event.action === 'RAISE' || event.action === "STRADDLE") {
-        store.lastBetOrRaise = event.value;
-        pot.value += parseInt(event.value);
+const assignAction = () => {
+    if(action.value === 'BET' || action.value === 'RAISE' || action.value === "STRADDLE") {
+        store.lastBetOrRaise = playerBet.value;
+        pot.value += parseInt(playerBet.value);
         const newItems = [{
             street: activeStreet.value,
-            position: event.position,
-            action: event.action,
-            value: event.value,
+            position: position.value,
+            action: action.value,
+            value: playerBet.value,
             pot: pot.value
         }]
         gridApi.value.applyTransaction({
             add: newItems,
         });
     }
-    if(event.action === 'CHECK' || event.action === 'FOLD') {
+    if(action.value === 'CHECK' || action.value === 'FOLD') {
         const newItems = [{
             street: activeStreet.value,
-            position: event.position,
-            action: event.action,
+            position: position.value,
+            action: action.value,
             value: 0,
             pot: pot.value
         }]
@@ -237,12 +181,12 @@ const assignAction = (event) => {
             add: newItems,
         });
     }
-    if(event.action === 'CALL') {
+    if(action.value === 'CALL') {
         pot.value += parseInt(store.lastBetOrRaise);
         const newItems = [{
             street: activeStreet.value,
-            position: event.position,
-            action: event.action,
+            position: position.value,
+            action: action.value,
             value: store.lastBetOrRaise,
             pot: pot.value
         }]
