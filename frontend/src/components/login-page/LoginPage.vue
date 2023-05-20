@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import {  MyForm, MyFormItem, MyInput } from '@/core/components/element-plus-proxy'
 import {ref} from "vue";
-import {useLoginPageStore} from "@/components/LoginPage/store/LoginPageStore";
+import {useLoginPageStore} from "@/components/login-page/store/login-page-store";
 import { useRouter } from "vue-router";
 
 const userName = ref('');

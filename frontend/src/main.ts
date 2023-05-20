@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import {routes} from './router'
 import {createPinia} from "pinia";
-import {useLoginPageStore} from "@/components/LoginPage/store/LoginPageStore";
+import {useLoginPageStore} from "@/components/login-page/store/login-page-store";
 import {createRouter, createWebHistory} from "vue-router";
 import "element-plus/dist/index.css"
 import VueDatePicker from '@vuepic/vue-datepicker';

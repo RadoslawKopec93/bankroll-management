@@ -4,7 +4,6 @@
   </el-row>
   <el-row :gutter="5">
     <el-col :span="7">
-
     </el-col>
       <el-col :span="2">
           <el-row >
@@ -21,12 +20,12 @@
           </el-row>
       </el-col>
     <el-col :span="3">
-        <DropDownList @selectedItem="setAction" emit-name="selectedItem" :items="dropdownItemsActions" :button-name="action"></DropDownList>
+        <ModifiableDropdownList @selectedItem="setAction" emit-name="selectedItem" :items="dropdownItemsActions" :button-name="action"></ModifiableDropdownList>
         <input v-model="playerBet">
         <button @click="assignAction">ADD</button>
     </el-col>
       <el-col :span="3">
-          <DropDownList @selectedItem1="setPosition" emit-name="selectedItem1" :items="dropdownItemsPositions" :button-name="position"></DropDownList>
+          <ModifiableDropdownList @selectedItem1="setPosition" emit-name="selectedItem1" :items="dropdownItemsPositions" :button-name="position"></ModifiableDropdownList>
       </el-col>
     <el-col :span="9" style="height: 500px;">
 <!--      <DeckOfCards/>-->
@@ -55,16 +54,16 @@
   </el-row>
 </template>
 <script setup lang="ts">
-import DeckOfCards from "@/components/MainPageView/DeckOfCards/DeckOfCards.vue";
-import MainHeader from '@/components/header/main-header.vue';
+import DeckOfCards from "@/components/main-page-view/deck-of-cards/DeckOfCards.vue";
+import MainHeader from '@/components/header/MainHeader.vue';
 import { computed, reactive, ref } from "vue";
-import DropDownList from "@/components/MainPageView/result-box-body/ModifiableDropDownList.vue";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridVue } from "ag-grid-vue3";
 import {positions, streets} from "@/global/enums";
-import { PkButton, PkCheckBox, PkInput } from "@/core/components/element-plus-proxy";
-import { useResultReportStore } from "@/components/MainPageView/store/ResultBoxStore";
+import { PkButton, PkCheckBox, PkInput, ModifiableDropdownList } from "@/core/components/element-plus-proxy";
+import { useResultReportStore } from "@/components/main-page-view/store/result-box-store";
+import LineChart from "@/components/main-page-view/line-chart/line-chart";
 
 const emit = defineEmits(['selectedItem'])
 const store = useResultReportStore();

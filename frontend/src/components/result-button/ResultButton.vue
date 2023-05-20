@@ -5,5 +5,9 @@
 export { default } from "./result-button"
 </script>
 <style lang="scss">
-@import 'result-button.scss';
+.button-class {
+  border: #cb2d06;
+  height: 10px;
+  width: 10px;
+}
 </style>

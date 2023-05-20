@@ -1,4 +1,5 @@
-export { default as PkButton} from "@/core/components/element-plus/PkButton.vue";
+export { default as PkButton} from "@/core/components/element-plus/pk-button.vue";
+export { default as ModifiableDropdownList} from "@/core/components/element-plus/modifiable-dropdown-list.vue";
 export {
     ElForm as MyForm,
     ElFormItem as MyFormItem,

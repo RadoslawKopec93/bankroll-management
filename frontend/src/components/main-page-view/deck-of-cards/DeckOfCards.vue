@@ -99,9 +99,9 @@
 
 </template>
 <script setup lang="ts">
-import Card from "@/components/MainPageView/card/card.vue";
+import Card from "@/components/main-page-view/card/card.vue";
 import {Ref, ref} from "vue";
-import {useCardComponentStore} from "@/components/MainPageView/store/ResultBoxStore";
+import {useCardComponentStore} from "@/components/main-page-view/store/result-box-store";
 import { MyButton } from '@/core/components/element-plus-proxy'
 type cardTypeArray = {id: string ,name: string,color:string,list:number, mainId: string}[]
 export type cardType = {id: string ,name: string,color:string,list:number, mainId: string}

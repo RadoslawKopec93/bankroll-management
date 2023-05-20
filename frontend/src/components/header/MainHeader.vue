@@ -1,5 +1,19 @@
-
-
+<template>
+  <div class="main-menu__app-name">POKER BANKROLL MANAGEMENT</div>
+  <div class="main-menu__navHeader">
+    <div class="main-menu__test">
+      <HeaderButton :is-user-menu="true" label="label1"></HeaderButton>
+      <HeaderButton :is-user-menu="true" label="label1"></HeaderButton>
+    </div>
+    <div class="main-menu__test2">
+      <HeaderButton :is-user-menu="false" label="USER MENU"></HeaderButton>
+    </div>
+  </div>
+</template>
+<script setup lang="ts">
+import HeaderButton from "@/components/header/header-button/HeaderButton.vue";
+</script>
+<style lang="scss">
 .main-menu {
   //overflow:hidden;
   //background-color: #cb2d06;
@@ -47,3 +61,5 @@
   }
 }
 
+
+</style>

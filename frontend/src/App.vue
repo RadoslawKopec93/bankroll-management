@@ -4,7 +4,7 @@
 <script>
 /* eslint-disable */
 
-import Header from './components/header/main-header.vue'
+import Header from './components/header/MainHeader.vue'
 export default {
 
   name: "App",

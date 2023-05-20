@@ -1,8 +1,8 @@
 import { RouteRecordRaw } from 'vue-router'
-import MainPageView from '@/components/MainPageView/MainPageView.vue'
-import DayResult from '@/components/MainPageView/result-box-body/DayResult.vue'
-import LoginPage from '@/components/LoginPage/LoginPage.vue'
-import ResultBox from "@/components/MainPageView/result-box-body/ResultBox.vue"
+import MainPageView from '@/components/main-page-view/MainPageView.vue'
+import DayResult from '@/components/main-page-view/result-box-body/DayResult.vue'
+import LoginPage from '@/components/login-page/LoginPage.vue'
+import ResultBox from "@/components/main-page-view/result-box-body/ResultBox.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {

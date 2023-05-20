@@ -20,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import LineChart from '@/components/MainPageView/line-chart/line-chart.vue';
-import MainHeader from '@/components/header/main-header.vue';
+import LineChart from '@/components/main-page-view/line-chart/LineChart.vue';
+import MainHeader from '@/components/header/MainHeader.vue';
 import { PkButton } from "@/core/components/element-plus-proxy";
 import { useRouter } from "vue-router";
 import {computed, ref} from "vue";

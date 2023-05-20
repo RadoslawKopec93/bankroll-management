@@ -16,7 +16,7 @@
 </template>
 <script setup lang="ts">
 import { PkDropdown, PkDropdownItem, PkInput,PkDropdownMenu } from "@/core/components/element-plus-proxy";
-import PkButton from "@/core/components/element-plus/PkButton.vue";
+import PkButton from "@/core/components/element-plus/pk-button.vue";
 
 const props = defineProps({
     emitName: {
