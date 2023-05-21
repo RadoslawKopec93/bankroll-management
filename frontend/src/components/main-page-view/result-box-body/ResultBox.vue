@@ -3,8 +3,15 @@
     <el-col><MainHeader/></el-col>
   </el-row>
   <el-row :gutter="5">
-    <el-col :span="7">
+
+    <el-col :span="3">
+        <ModifiableDropdownList @selectedItem="setAction" emit-name="selectedItem" :items="dropdownItemsActions" :button-name="action"></ModifiableDropdownList>
+        <PkInput class="ResultBox__betInput" v-model="playerBet"/>
+        <PkButton @click="assignAction">ADD</PkButton>
     </el-col>
+      <el-col :span="3">
+          <ModifiableDropdownList @selectedItem1="setPosition" emit-name="selectedItem1" :items="dropdownItemsPositions" :button-name="position"></ModifiableDropdownList>
+      </el-col>
       <el-col :span="2">
           <el-row >
               <PkCheckBox v-model="showPositionInDropdown.SB" @change="changingDropdownListValues('SB')">Small Blind</PkCheckBox>
@@ -18,14 +25,6 @@
               <PkCheckBox v-model="showPositionInDropdown.CO" @change="changingDropdownListValues('CO')">Cut Off</PkCheckBox>
               <PkCheckBox v-model="showPositionInDropdown.BTN" @change="changingDropdownListValues('BTN')">Button</PkCheckBox>
           </el-row>
-      </el-col>
-    <el-col :span="3">
-        <ModifiableDropdownList @selectedItem="setAction" emit-name="selectedItem" :items="dropdownItemsActions" :button-name="action"></ModifiableDropdownList>
-        <input v-model="playerBet">
-        <button @click="assignAction">ADD</button>
-    </el-col>
-      <el-col :span="3">
-          <ModifiableDropdownList @selectedItem1="setPosition" emit-name="selectedItem1" :items="dropdownItemsPositions" :button-name="position"></ModifiableDropdownList>
       </el-col>
     <el-col :span="9" style="height: 500px;">
 <!--      <DeckOfCards/>-->
@@ -62,8 +61,12 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridVue } from "ag-grid-vue3";
 import {positions, streets} from "@/global/enums";
 import { PkButton, PkCheckBox, PkInput, ModifiableDropdownList } from "@/core/components/element-plus-proxy";
-import { useResultReportStore } from "@/components/main-page-view/store/result-box-store";
-import LineChart from "@/components/main-page-view/line-chart/line-chart";
+import { useResultReportStore } from "@/components/main-page-view/store/result-box-store"
+
+const test22 = computed( () => store.getTest())
+const test1 = () => {
+    console.log(store.getTest().t)
+}
 
 const emit = defineEmits(['selectedItem'])
 const store = useResultReportStore();
@@ -156,7 +159,7 @@ const defaultColDef = {
 const assignAction = () => {
     if(action.value === 'BET' || action.value === 'RAISE' || action.value === "STRADDLE") {
         store.lastBetOrRaise = playerBet.value;
-        pot.value += parseInt(playerBet.value);
+        pot.value += Number(playerBet.value);
         const newItems = [{
             street: activeStreet.value,
             position: position.value,
@@ -181,7 +184,7 @@ const assignAction = () => {
         });
     }
     if(action.value === 'CALL') {
-        pot.value += parseInt(store.lastBetOrRaise);
+        pot.value += Number(store.lastBetOrRaise);
         const newItems = [{
             street: activeStreet.value,
             position: position.value,
@@ -198,6 +201,10 @@ const assignAction = () => {
 </script>
 <style lang="scss">
 .ResultBox {
+  &__betInput {
+    margin: 5px 0 5px 0;
+    border: 1px black solid;
+  }
    &__streets {
       display: flex;
       width: 400px;

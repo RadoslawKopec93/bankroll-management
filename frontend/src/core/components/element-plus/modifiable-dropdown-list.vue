@@ -1,8 +1,8 @@
 <template>
     <el-row :gutter="5">
-        <el-col :span="10">
-            <PkDropdown>
-                <PkButton type="primary">
+        <el-col :span="10" class="ModifiableDropdownList">
+            <PkDropdown class="ModifiableDropdownList__dropdownButton">
+                <PkButton  type="primary">
                     {{ buttonName }}
                 </PkButton>
                 <template #dropdown>
@@ -34,4 +34,11 @@ const props = defineProps({
 </script>
 
 <style scoped lang="scss">
+.ModifiableDropdownList {
+   min-width: 100%;
+    &__dropdownButton {
+        margin-top: 5px;
+        width: 100%;
+    }
+}
 </style>

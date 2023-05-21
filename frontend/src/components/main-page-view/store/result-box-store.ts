@@ -16,7 +16,13 @@ export const useResultReportStore = defineStore("card",()=> {
         [positions.co, false],
         [positions.btn,false]]
     ))
-
+    const testGet = ref({
+        t:'1',
+        tt:'11'
+    })
+    const getTest = () => {
+        return testGet.value
+    }
     const smallBlind = ref();
     const bigBlind = ref();
     const underTheGun = ref();
@@ -39,6 +45,7 @@ export const useResultReportStore = defineStore("card",()=> {
         cutOff,
         button])
   return {
+      getTest,
       positionsMap,
       smallBlind,
       bigBlind,
