@@ -1,9 +1,10 @@
 import {defineStore} from "pinia";
 import {Ref, ref} from "vue";
-import {positions} from "@/global/enums";
-
+import { positions } from "@/global/enums";
+type cardType = {id: string ,name: string,color:string,list:number, mainId: string}
 export const useResultReportStore = defineStore("card",()=> {
     const lastBetOrRaise = ref();
+    const board = ref<cardType[]>();
     const positionsMap = ref(new Map<string,boolean>([
         [positions.sb,true],
         [positions.bb,true],
@@ -16,48 +17,11 @@ export const useResultReportStore = defineStore("card",()=> {
         [positions.co, false],
         [positions.btn,false]]
     ))
-    const testGet = ref({
-        t:'1',
-        tt:'11'
-    })
-    const getTest = () => {
-        return testGet.value
+    const addBoardCards = (boardCards: cardType[]): void => {
+        board.value = boardCards
     }
-    const smallBlind = ref();
-    const bigBlind = ref();
-    const underTheGun = ref();
-    const underTheGun1 = ref();
-    const underTheGun2 = ref();
-    const middlePosition = ref();
-    const lowJack = ref();
-    const highJack = ref();
-    const cutOff = ref();
-    const button = ref();
-    const positionsArray = ref([
-        smallBlind,
-        bigBlind,
-        underTheGun,
-        underTheGun1,
-        underTheGun2,
-        middlePosition,
-        lowJack,
-        highJack,
-        cutOff,
-        button])
   return {
-      getTest,
       positionsMap,
-      smallBlind,
-      bigBlind,
-      underTheGun,
-      underTheGun1,
-      underTheGun2,
-      middlePosition,
-      lowJack,
-      highJack,
-      cutOff,
-      button,
-      positionsArray,
       lastBetOrRaise
   }
 });

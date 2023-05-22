@@ -26,8 +26,8 @@
               <PkCheckBox v-model="showPositionInDropdown.BTN" @change="changingDropdownListValues('BTN')">Button</PkCheckBox>
           </el-row>
       </el-col>
-    <el-col :span="9" style="height: 500px;">
-<!--      <DeckOfCards/>-->
+    <el-col :span="9" style="margin-left: 60px">
+      <DeckOfCards/>
     </el-col>
   </el-row>
   <el-row>

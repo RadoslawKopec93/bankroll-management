@@ -87,22 +87,19 @@
           :card-color="fifthFlopCard.color"
           :is-visible="fifthCard"
       />
-  </div >
-    <div class="DeckOfCards__zone--input">
-      <input>
-
-    </div>
-
+    </div >
   </div>
-  <MyButton class="DeckOfCards__zone--button" @click="pushDeal">CONFIRM</MyButton>
+    <div class="DeckOfCards__underZoneInputAndButton"></div>
+    <PkInput placeholder="comment" class="DeckOfCards__underZoneInputAndButton--input"></PkInput>
+    <PkButton @click="addCards" class="DeckOfCards__underZoneInputAndButton--confirmButton">CONFIRM</PkButton>
   </figure>
 
 </template>
 <script setup lang="ts">
 import Card from "@/components/main-page-view/card/card.vue";
 import {Ref, ref} from "vue";
-import {useCardComponentStore} from "@/components/main-page-view/store/result-box-store";
-import { MyButton } from '@/core/components/element-plus-proxy'
+import { useResultReportStore } from "@/components/main-page-view/store/result-box-store";
+import { PkButton, PkInput } from '@/core/components/element-plus-proxy'
 type cardTypeArray = {id: string ,name: string,color:string,list:number, mainId: string}[]
 export type cardType = {id: string ,name: string,color:string,list:number, mainId: string}
 
@@ -119,15 +116,14 @@ let fourthCard = false;
 let fifthCard = false;
 
 let count = 0;
-const pushDeal = () =>{
-  const store = useCardComponentStore();
-  if(firstFlopCard.value.name != 'b' && secondFlopCard.value.name != 'b' && thirdFlopCard.value.name != 'b') {
-    store.deal.length = 0;
-    store.deal.push(firstFlopCard.value);
-    store.deal.push(secondFlopCard.value);
-    store.deal.push(thirdFlopCard.value);
-    console.log(store.deal);
-  }
+
+const addCards = () => {
+    const cards: cardType[] = [fifthFlopCard.value,secondFlopCard.value, thirdFlopCard.value,fourthFlopCard.value, fifthFlopCard.value]
+    const sortedCards: cardType [] = cards.filter( card =>{
+        if(card.name !== 'B'){
+            return card;
+        }
+    })
 }
 
 const onDrop = (event) =>{
@@ -207,6 +203,7 @@ const startDrag = (event, item) => {
   event.dataTransfer.effectAllowed = 'move';
   event.dataTransfer.setData('itemID', item.id);
 }
+
 let cardNamesClub = ref([
     {id:'0',name:'A',color:'CLUB',list:1, mainId: "0"},
     {id:'1',name:'K',color:'CLUB',list:1, mainId: "1"},
@@ -232,34 +229,34 @@ let cardNamesClub = ref([
     {id:'21',name:'6',color:'DIAMOND',list:2, mainId: "21"},
     {id:'22',name:'5',color:'DIAMOND',list:2, mainId: "22"},
     {id:'23',name:'4',color:'DIAMOND',list:2, mainId: "23"},
-  {id:'24',name:'3',color:'DIAMOND',list:2, mainId: "24"},
-  {id:'25',name:'2',color:'DIAMOND',list:2, mainId: "25"},
-  {id:'26',name:'A',color:'SPADE',list:3, mainId: "26"},
-  {id:'27',name:'K',color:'SPADE',list:3, mainId: "27"},
-  {id:'28',name:'Q',color:'SPADE',list:3, mainId: "28"},
-  {id:'29',name:'J',color:'SPADE',list:3, mainId: "29"},
-  {id:'30',name:'10',color:'SPADE',list:3, mainId: "30"},
-  {id:'31',name:'9',color:'SPADE',list:3, mainId: "31"},
-  {id:'32',name:'8',color:'SPADE',list:3, mainId: "32"},
-  {id:'33',name:'7',color:'SPADE',list:3, mainId: "33"},
-  {id:'34',name:'6',color:'SPADE',list:3, mainId: "34"},
-  {id:'35',name:'5',color:'SPADE',list:3, mainId: "35"},
-  {id:'36',name:'4',color:'SPADE',list:3, mainId: "36"},
-  {id:'37',name:'3',color:'SPADE',list:3, mainId: "37"},
-  {id:'38',name:'2',color:'SPADE',list:3, mainId: "38"},
-  {id:'39',name:'A',color:'HEART',list:4, mainId: "39"},
-  {id:'40',name:'K',color:'HEART',list:4, mainId: "40"},
-  {id:'41',name:'Q',color:'HEART',list:4, mainId: "41"},
-  {id:'42',name:'J',color:'HEART',list:4, mainId: "42"},
-  {id:'43',name:'10',color:'HEART',list:4, mainId: "43"},
-  {id:'44',name:'9',color:'HEART',list:4, mainId: "44"},
-  {id:'45',name:'8',color:'HEART',list:4, mainId: "45"},
-  {id:'46',name:'7',color:'HEART',list:4, mainId: "46"},
-  {id:'47',name:'6',color:'HEART',list:4, mainId: "47"},
-  {id:'48',name:'5',color:'HEART',list:4, mainId: "48"},
-  {id:'49',name:'4',color:'HEART',list:4, mainId: "49"},
-  {id:'50',name:'3',color:'HEART',list:4, mainId: "50"},
-  {id:'51',name:'2',color:'HEART',list:4, mainId: "51"},
+    {id:'24',name:'3',color:'DIAMOND',list:2, mainId: "24"},
+    {id:'25',name:'2',color:'DIAMOND',list:2, mainId: "25"},
+    {id:'26',name:'A',color:'SPADE',list:3, mainId: "26"},
+    {id:'27',name:'K',color:'SPADE',list:3, mainId: "27"},
+    {id:'28',name:'Q',color:'SPADE',list:3, mainId: "28"},
+    {id:'29',name:'J',color:'SPADE',list:3, mainId: "29"},
+    {id:'30',name:'10',color:'SPADE',list:3, mainId: "30"},
+    {id:'31',name:'9',color:'SPADE',list:3, mainId: "31"},
+    {id:'32',name:'8',color:'SPADE',list:3, mainId: "32"},
+    {id:'33',name:'7',color:'SPADE',list:3, mainId: "33"},
+    {id:'34',name:'6',color:'SPADE',list:3, mainId: "34"},
+    {id:'35',name:'5',color:'SPADE',list:3, mainId: "35"},
+    {id:'36',name:'4',color:'SPADE',list:3, mainId: "36"},
+    {id:'37',name:'3',color:'SPADE',list:3, mainId: "37"},
+    {id:'38',name:'2',color:'SPADE',list:3, mainId: "38"},
+    {id:'39',name:'A',color:'HEART',list:4, mainId: "39"},
+    {id:'40',name:'K',color:'HEART',list:4, mainId: "40"},
+    {id:'41',name:'Q',color:'HEART',list:4, mainId: "41"},
+    {id:'42',name:'J',color:'HEART',list:4, mainId: "42"},
+    {id:'43',name:'10',color:'HEART',list:4, mainId: "43"},
+    {id:'44',name:'9',color:'HEART',list:4, mainId: "44"},
+    {id:'45',name:'8',color:'HEART',list:4, mainId: "45"},
+    {id:'46',name:'7',color:'HEART',list:4, mainId: "46"},
+    {id:'47',name:'6',color:'HEART',list:4, mainId: "47"},
+    {id:'48',name:'5',color:'HEART',list:4, mainId: "48"},
+    {id:'49',name:'4',color:'HEART',list:4, mainId: "49"},
+    {id:'50',name:'3',color:'HEART',list:4, mainId: "50"},
+    {id:'51',name:'2',color:'HEART',list:4, mainId: "51"},
 ]);
 
 const getList = (list) => {
@@ -271,6 +268,17 @@ const getList = (list) => {
 <style lang="scss">
 .DeckOfCards{
 
+   &__underZoneInputAndButton {
+     display: inline-block;
+     &--input{
+       margin-top: 5px;
+       max-width: 70%;
+     }
+     &--confirmButton {
+       margin-top: 5px;
+       max-width: 30%;
+     }
+   }
    &__rows{
      display: flex;
      justify-content: center;
@@ -285,6 +293,7 @@ const getList = (list) => {
      width: 100%;
      background-color: blanchedalmond;
      margin-top: 20px;
+     border: 1px solid black;
      &--selected{
        display: inline-flex;
      }
