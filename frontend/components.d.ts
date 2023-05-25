@@ -22,7 +22,7 @@ declare module '@vue/runtime-core' {
     MainHeader: typeof import('./src/components/header/MainHeader.vue')['default']
     MainPageView: typeof import('./src/components/main-page-view/MainPageView.vue')['default']
     ResultBox: typeof import('./src/components/main-page-view/result-box-body/ResultBox.vue')['default']
-    ResultButton: typeof import('./src/components/result-button/ResultButton.vue')['default']
+    ResultButton: typeof import('./src/components/main-page-view/result-box-body/ResultButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

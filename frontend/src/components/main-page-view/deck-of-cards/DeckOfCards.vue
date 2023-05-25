@@ -57,40 +57,40 @@
        @dragover.prevent>
   <div class="DeckOfCards__zone--selected">
       <Card draggable="true"
-            @dragstart="startDrag($event,firstFlopCard)"
-          :card-name="firstFlopCard.name"
-          :card-color="firstFlopCard.color"
+            @dragstart="startDrag($event,cardsOnBoard[0])"
+          :card-name="cardsOnBoard[0].name"
+          :card-color="cardsOnBoard[0].color"
           :is-visible="firstCard"
       />
       <Card draggable="true"
-            @dragstart="startDrag($event,secondFlopCard)"
-          :card-name="secondFlopCard.name"
-          :card-color="secondFlopCard.color"
+            @dragstart="startDrag($event,cardsOnBoard[1])"
+          :card-name="cardsOnBoard[1].name"
+          :card-color="cardsOnBoard[1].color"
           :is-visible="secondCard"
       />
       <Card draggable="true"
-            @dragstart="startDrag($event,thirdFlopCard)"
-          :card-name="thirdFlopCard.name"
-          :card-color="thirdFlopCard.color"
+            @dragstart="startDrag($event,cardsOnBoard[2])"
+          :card-name="cardsOnBoard[2].name"
+          :card-color="cardsOnBoard[2].color"
           :is-visible="thirdCard"
       />
 
       <Card draggable="true"
-            @dragstart="startDrag($event,fourthFlopCard)"
-          :card-name="fourthFlopCard.name"
-          :card-color="fourthFlopCard.color"
+            @dragstart="startDrag($event,cardsOnBoard[3])"
+          :card-name="cardsOnBoard[3].name"
+          :card-color="cardsOnBoard[3].color"
           :is-visible="fourthCard"
       />
       <Card draggable="true"
-            @dragstart="startDrag($event,fifthFlopCard)"
-          :card-name="fifthFlopCard.name"
-          :card-color="fifthFlopCard.color"
+            @dragstart="startDrag($event,cardsOnBoard[4])"
+          :card-name="cardsOnBoard[4].name"
+          :card-color="cardsOnBoard[4].color"
           :is-visible="fifthCard"
       />
     </div >
   </div>
     <div class="DeckOfCards__underZoneInputAndButton"></div>
-    <PkInput placeholder="comment" class="DeckOfCards__underZoneInputAndButton--input"></PkInput>
+    <PkInput v-model="comment" placeholder="comment" class="DeckOfCards__underZoneInputAndButton--input"></PkInput>
     <PkButton @click="addCards" class="DeckOfCards__underZoneInputAndButton--confirmButton">CONFIRM</PkButton>
   </figure>
 
@@ -103,11 +103,16 @@ import { PkButton, PkInput } from '@/core/components/element-plus-proxy'
 type cardTypeArray = {id: string ,name: string,color:string,list:number, mainId: string}[]
 export type cardType = {id: string ,name: string,color:string,list:number, mainId: string}
 
-const firstFlopCard = ref({id:'0',name:'B',color:'CLUB',list:1, mainId: "0"})
-const secondFlopCard = ref({id:'0',name:'B',color:'CLUB',list:1, mainId: "0"})
-const thirdFlopCard = ref({id:'0',name:'B',color:'CLUB',list:1, mainId: "0"})
-const fourthFlopCard = ref({id:'0',name:'B',color:'CLUB',list:1, mainId: "0"})
-const fifthFlopCard = ref({id:'0',name:'B',color:'CLUB',list:1, mainId: "0"})
+const store = useResultReportStore();
+
+const comment = ref("");
+const cardsOnBoard: cardType[] = [
+    {id:'0',name:'B',color:'CLUB',list:1, mainId: "0"},
+    {id:'0',name:'B',color:'CLUB',list:1, mainId: "0"},
+    {id:'0',name:'B',color:'CLUB',list:1, mainId: "0"},
+    {id:'0',name:'B',color:'CLUB',list:1, mainId: "0"},
+    {id:'0',name:'B',color:'CLUB',list:1, mainId: "0"},
+]
 
 let firstCard = false;
 let secondCard = false;
@@ -118,12 +123,12 @@ let fifthCard = false;
 let count = 0;
 
 const addCards = () => {
-    const cards: cardType[] = [fifthFlopCard.value,secondFlopCard.value, thirdFlopCard.value,fourthFlopCard.value, fifthFlopCard.value]
-    const sortedCards: cardType [] = cards.filter( card =>{
+    const sortedCards: cardType [] = cardsOnBoard.filter( card =>{
         if(card.name !== 'B'){
             return card;
         }
     })
+    store.addBoardCards(sortedCards, comment.value);
 }
 
 const onDrop = (event) =>{
@@ -133,27 +138,27 @@ const onDrop = (event) =>{
     count--;
     switch (count) {
       case 0: {
-        cardNamesClub.value.push(firstFlopCard.value);
+        cardNamesClub.value.push(cardsOnBoard[0]);
         firstCard = false;
         break;
       }
       case 1: {
-        cardNamesClub.value.push(secondFlopCard.value);
+        cardNamesClub.value.push(cardsOnBoard[1]);
         secondCard = false;
         break;
       }
       case 2: {
-        cardNamesClub.value.push(thirdFlopCard.value);
+        cardNamesClub.value.push(cardsOnBoard[2]);
         thirdCard = false;
         break;
       }
       case 3: {
-        cardNamesClub.value.push(fourthFlopCard.value);
+        cardNamesClub.value.push(cardsOnBoard[3]);
         fourthCard = false;
         break;
       }
       case 4: {
-        cardNamesClub.value.push(fifthFlopCard.value);
+        cardNamesClub.value.push(cardsOnBoard[4]);
         fifthCard = false;
         break;
       }
@@ -170,27 +175,27 @@ const onDropSelected = (event) =>{
 
     switch (count) {
       case 0: {
-        firstFlopCard.value = item;
+          cardsOnBoard[0] = item;
         firstCard = true;
         break;
       }
       case 1: {
-        secondFlopCard.value = item;
+          cardsOnBoard[1] = item;
         secondCard = true;
         break;
       }
       case 2: {
-        thirdFlopCard.value = item;
+          cardsOnBoard[2] = item;
         thirdCard = true;
         break;
       }
       case 3: {
-        fourthFlopCard.value = item;
+          cardsOnBoard[3] = item;
         fourthCard = true;
         break;
       }
       case 4: {
-        fifthFlopCard.value = item;
+          cardsOnBoard[4] = item;
         fifthCard = true;
         break;
       }
