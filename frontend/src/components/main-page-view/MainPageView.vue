@@ -5,14 +5,15 @@
     <el-row>
       <el-col :span="9"><LineChart/></el-col>
       <el-col :span="6"><Datepicker v-model="date"/></el-col>
-      <el-col :span="9" style="height: 500px; display: flex; max-width: 400px">
-        <PkButton v-for="t in test"
+      <el-col :span="9"  class="MainPageView"     >
+          <div v-for="t in test" class="MainPageView__resultButton">
+          <PkButton
             @click="goToResult"
-            class="MainPageView"
             button-name="result"
             :result="resultData.result"
             :date="resultData.date"
-        >{{ resultData.result }} zl<br>{{resultData.date}}</PkButton>
+          >{{ resultData.result }} zl<br>{{resultData.date}}</PkButton>
+          </div>
       </el-col>
     </el-row>
 
@@ -51,7 +52,14 @@ const goToResult = () => {
 .MainPageView {
   height: 500px;
   width: 400px;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap ;
+  flex-direction: column;
+
+  &__resultButton {
+    height: 40px;
+    width: 100px ;
+  }
 
 }
 body{
