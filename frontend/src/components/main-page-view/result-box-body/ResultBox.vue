@@ -13,7 +13,7 @@
           <ModifiableDropdownList @selectedItem1="setPosition" emit-name="selectedItem1" :items="dropdownItemsPositions" :button-name="position"></ModifiableDropdownList>
       </el-col>
       <el-col :span="2">
-          <el-row >
+          <div style="display: flex; flex-direction: column">
               <PkCheckBox v-model="showPositionInDropdown.SB" @change="changingDropdownListValues('SB')">Small Blind</PkCheckBox>
               <PkCheckBox v-model="showPositionInDropdown.BB" @change="changingDropdownListValues('BB')">Big Blind</PkCheckBox>
               <PkCheckBox v-model="showPositionInDropdown.UTG" @change="changingDropdownListValues('UTG')">Under the Gun</PkCheckBox>
@@ -23,8 +23,7 @@
               <PkCheckBox v-model="showPositionInDropdown.LJ" @change="changingDropdownListValues('LJ')">Low Jack</PkCheckBox>
               <PkCheckBox v-model="showPositionInDropdown.HJ" @change="changingDropdownListValues('HJ')">High Jack</PkCheckBox>
               <PkCheckBox v-model="showPositionInDropdown.CO" @change="changingDropdownListValues('CO')">Cut Off</PkCheckBox>
-              <PkCheckBox v-model="showPositionInDropdown.BTN" @change="changingDropdownListValues('BTN')">Button</PkCheckBox>
-          </el-row>
+          </div>
       </el-col>
     <el-col :span="9" style="margin-left: 60px">
       <DeckOfCards/>

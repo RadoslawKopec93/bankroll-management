@@ -15,6 +15,7 @@ declare module '@vue/runtime-core' {
     DayResult: typeof import('./src/components/main-page-view/result-box-body/DayResult.vue')['default']
     DeckOfCards: typeof import('./src/components/main-page-view/deck-of-cards/DeckOfCards.vue')['default']
     ElCol: typeof import('element-plus/es')['ElCol']
+    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElRow: typeof import('element-plus/es')['ElRow']
     HeaderButton: typeof import('./src/components/header/header-button/HeaderButton.vue')['default']
     LineChart: typeof import('./src/components/main-page-view/line-chart/LineChart.vue')['default']

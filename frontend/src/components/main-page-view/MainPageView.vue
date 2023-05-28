@@ -4,7 +4,7 @@
     </el-row>
     <el-row>
       <el-col :span="9"><LineChart/></el-col>
-      <el-col :span="6"><Datepicker v-model="date"/></el-col>
+      <el-col :span="6"><DatePicker v-model="testt1" @click="test1"/></el-col>
       <el-col :span="9"  class="MainPageView"     >
           <div v-for="t in test" class="MainPageView__resultButton">
           <PkButton
@@ -27,12 +27,20 @@ import ResultButton from '@/components/main-page-view/result-box-body/ResultButt
 import { PkButton } from "@/core/components/element-plus-proxy";
 import { useRouter } from "vue-router";
 import {computed, ref} from "vue";
-import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import ResultBox from "@/components/main-page-view/result-box-body/ResultBox.vue";
+import DatePicker from "@/core/components/element-plus/date-picker.vue";
 
 const router = useRouter();
 const date = ref();
+
+const testt1 = computed({
+    get: () => date.value,
+    set: v => date.value = v,
+})
+const test1 = () => {
+    console.log(date.value);
+}
 
 const test = [1,2,3,4,5,6,7,8,9,10,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 const resultData = computed( () => {
