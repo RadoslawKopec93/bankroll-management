@@ -5,14 +5,15 @@
     <el-row>
       <el-col :span="9"><LineChart/></el-col>
       <el-col :span="6"><Datepicker v-model="date"/></el-col>
-      <el-col :span="9" style="height: 500px;">
-        <PkButton v-for="t in test"
+      <el-col :span="9"  class="MainPageView"     >
+          <div v-for="t in test" class="MainPageView__resultButton">
+          <PkButton
             @click="goToResult"
-            class="MainPageView"
             button-name="result"
             :result="resultData.result"
             :date="resultData.date"
-        >{{ resultData.result }} zl<br>{{resultData.date}}</PkButton>
+          >{{ resultData.result }} zl<br>{{resultData.date}}</PkButton>
+          </div>
       </el-col>
     </el-row>
 
@@ -22,11 +23,13 @@
 <script setup lang="ts">
 import LineChart from '@/components/main-page-view/line-chart/LineChart.vue';
 import MainHeader from '@/components/header/MainHeader.vue';
+import ResultButton from '@/components/main-page-view/result-box-body/ResultButton.vue'
 import { PkButton } from "@/core/components/element-plus-proxy";
 import { useRouter } from "vue-router";
 import {computed, ref} from "vue";
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import ResultBox from "@/components/main-page-view/result-box-body/ResultBox.vue";
 
 const router = useRouter();
 const date = ref();
@@ -46,6 +49,19 @@ const goToResult = () => {
 
 </script>
 <style lang="scss">
+.MainPageView {
+  height: 500px;
+  width: 400px;
+  display: flex;
+  flex-wrap: wrap ;
+  flex-direction: column;
+
+  &__resultButton {
+    height: 40px;
+    width: 100px ;
+  }
+
+}
 body{
   padding: 0;
 }

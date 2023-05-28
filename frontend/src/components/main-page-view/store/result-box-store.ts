@@ -5,6 +5,8 @@ type cardType = {id: string ,name: string,color:string,list:number, mainId: stri
 export const useResultReportStore = defineStore("card",()=> {
     const lastBetOrRaise = ref();
     const board = ref<cardType[]>();
+    const comment = ref();
+
     const positionsMap = ref(new Map<string,boolean>([
         [positions.sb,true],
         [positions.bb,true],
@@ -17,11 +19,14 @@ export const useResultReportStore = defineStore("card",()=> {
         [positions.co, false],
         [positions.btn,false]]
     ))
-    const addBoardCards = (boardCards: cardType[]): void => {
+    const addBoardCards = (boardCards: cardType[], newComment: string): void => {
         board.value = boardCards
+        comment.value = newComment;
+        console.log(comment.value);
     }
   return {
       positionsMap,
-      lastBetOrRaise
+      lastBetOrRaise,
+      addBoardCards
   }
 });
