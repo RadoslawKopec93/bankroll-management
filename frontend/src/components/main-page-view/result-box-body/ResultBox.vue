@@ -28,6 +28,9 @@
     <el-col :span="9" style="margin-left: 60px">
       <DeckOfCards/>
     </el-col>
+    <el-col :span="6">
+
+    </el-col>
   </el-row>
   <el-row>
     <el-col :span="24">
