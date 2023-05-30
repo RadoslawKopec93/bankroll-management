@@ -6,6 +6,7 @@ export const useResultReportStore = defineStore("card",()=> {
     const lastBetOrRaise = ref();
     const board = ref<cardType[]>();
     const comment = ref();
+    const handIsUsed = false;
 
     const positionsMap = ref(new Map<string,boolean>([
         [positions.sb,true],
@@ -25,6 +26,7 @@ export const useResultReportStore = defineStore("card",()=> {
         console.log(comment.value);
     }
   return {
+      handIsUsed,
       positionsMap,
       lastBetOrRaise,
       addBoardCards

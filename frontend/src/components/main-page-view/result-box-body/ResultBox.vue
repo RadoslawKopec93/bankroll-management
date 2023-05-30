@@ -29,7 +29,8 @@
       <DeckOfCards/>
     </el-col>
     <el-col :span="6">
-
+         <SingleHand hand-name="Lost 100" :loss-hand="false" :show-hand="true"></SingleHand>
+         <SingleHand hand-name="Lost 100" :loss-hand="false" :show-hand="true"></SingleHand>
     </el-col>
   </el-row>
   <el-row>
@@ -64,6 +65,7 @@ import { AgGridVue } from "ag-grid-vue3";
 import {positions, streets} from "@/global/enums";
 import { PkButton, PkCheckBox, PkInput, ModifiableDropdownList } from "@/core/components/element-plus-proxy";
 import { useResultReportStore } from "@/components/main-page-view/store/result-box-store"
+import SingleHand from "@/components/main-page-view/result-box-body/SingleHand.vue";
 
 const test22 = computed( () => store.getTest())
 const test1 = () => {

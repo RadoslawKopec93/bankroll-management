@@ -25,5 +25,6 @@ declare module '@vue/runtime-core' {
     ResultButton: typeof import('./src/components/main-page-view/result-box-body/ResultButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SingleHand: typeof import('./src/components/main-page-view/result-box-body/SingleHand.vue')['default']
   }
 }
