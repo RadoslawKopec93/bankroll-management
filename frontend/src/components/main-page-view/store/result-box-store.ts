@@ -2,6 +2,14 @@ import {defineStore} from "pinia";
 import {Ref, ref} from "vue";
 import { positions } from "@/global/enums";
 type cardType = {id: string ,name: string,color:string,list:number, mainId: string}
+export interface TableRowAction {
+    street: string,
+    position: string,
+    action: string,
+    value: any,
+    pot: number
+}
+
 export const useResultReportStore = defineStore("card",()=> {
     const lastBetOrRaise = ref();
     const board = ref<cardType[]>();

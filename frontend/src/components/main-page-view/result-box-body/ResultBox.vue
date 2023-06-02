@@ -46,7 +46,7 @@
                 style="width: 900px; height: 500px"
                 class="ag-theme-alpine"
                 :columnDefs="columnDefs.value"
-                :rowData="rowData.value"
+                :rowData="rowData"
                 :defaultColDef="defaultColDef"
                 @grid-ready="onGridReady"
                 rowSelection='multiple'
@@ -64,13 +64,11 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridVue } from "ag-grid-vue3";
 import {positions, streets} from "@/global/enums";
 import { PkButton, PkCheckBox, PkInput, ModifiableDropdownList } from "@/core/components/element-plus-proxy";
-import { useResultReportStore } from "@/components/main-page-view/store/result-box-store"
+import {TableRowAction, useResultReportStore} from "@/components/main-page-view/store/result-box-store"
 import SingleHand from "@/components/main-page-view/result-box-body/SingleHand.vue";
 
-const test22 = computed( () => store.getTest())
-const test1 = () => {
-    console.log(store.getTest().t)
-}
+
+
 
 const emit = defineEmits(['selectedItem'])
 const store = useResultReportStore();
@@ -131,8 +129,9 @@ const dropdownItemsActions = ref(["CALL","CHECK","RAISE","FOLD","STRADDLE","BET"
 const dropdownItemsPositions = ref(["SB","BB"])
 
 const revertAction = () => {
-    const selectedData = gridApi.value.getSelectedRows();
-    gridApi.value.applyTransaction({ remove: selectedData });
+ console.log(rowData.value);
+    /*const selectedData = gridApi.value.getSelectedRows();
+    gridApi.value.applyTransaction({ remove: selectedData });*/
 };
 
 const changeStreet = (street) => {
@@ -151,7 +150,7 @@ const columnDefs = reactive({value:[
         { headerName: "Pot", field: "pot"}
     ],})
 
-const rowData = reactive({value:[]})
+const rowData = ref<TableRowAction[]>()
 
 const defaultColDef = {
     sortable: true,
@@ -161,6 +160,7 @@ const defaultColDef = {
 
 
 const assignAction = () => {
+
     if(action.value === 'BET' || action.value === 'RAISE' || action.value === "STRADDLE") {
         store.lastBetOrRaise = playerBet.value;
         pot.value += Number(playerBet.value);
@@ -171,6 +171,7 @@ const assignAction = () => {
             value: playerBet.value,
             pot: pot.value
         }]
+        rowData.value === undefined ? rowData.value = newItems : rowData.value.push(newItems[0])
         gridApi.value.applyTransaction({
             add: newItems,
         });
@@ -183,6 +184,7 @@ const assignAction = () => {
             value: 0,
             pot: pot.value
         }]
+        rowData.value === undefined ? rowData.value = newItems : rowData.value.push(newItems[0])
         gridApi.value.applyTransaction({
             add: newItems,
         });
@@ -196,6 +198,7 @@ const assignAction = () => {
             value: store.lastBetOrRaise,
             pot: pot.value
         }]
+        rowData.value === undefined ? rowData.value = newItems : rowData.value.push(newItems[0])
         gridApi.value.applyTransaction({
             add: newItems,
         });
