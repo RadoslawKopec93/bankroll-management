@@ -9,14 +9,19 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AddTask: typeof import('./src/components/ToDoApp/AddTask.vue')['default']
     ArbitrageBettingCalculator: typeof import('./src/components/arbitrage-betting-calculator/arbitrage-betting-calculator.vue')['default']
     ArbitrageHeader: typeof import('./src/components/arbitrage-betting-calculator/arbitrage-header/arbitrage-header.vue')['default']
     Card: typeof import('./src/components/main-page-view/card/card.vue')['default']
+    CircleButton: typeof import('./src/components/ToDoApp/CircleButton.vue')['default']
     DayResult: typeof import('./src/components/main-page-view/result-box-body/DayResult.vue')['default']
     DeckOfCards: typeof import('./src/components/main-page-view/deck-of-cards/DeckOfCards.vue')['default']
     ElCol: typeof import('element-plus/es')['ElCol']
+    ElOption: typeof import('element-plus/es')['ElOption']
     ElRow: typeof import('element-plus/es')['ElRow']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
     HeaderButton: typeof import('./src/components/header/header-button/HeaderButton.vue')['default']
+    HeaderHeadline: typeof import('./src/components/ToDoApp/HeaderHeadline.vue')['default']
     LineChart: typeof import('./src/components/main-page-view/line-chart/LineChart.vue')['default']
     LoginPage: typeof import('./src/components/login-page/LoginPage.vue')['default']
     MainHeader: typeof import('./src/components/header/MainHeader.vue')['default']
@@ -26,5 +31,8 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SingleHand: typeof import('./src/components/main-page-view/result-box-body/SingleHand.vue')['default']
+    ToDoHeader: typeof import('./src/components/ToDoApp/ToDoHeader.vue')['default']
+    ToDoPageView: typeof import('./src/components/ToDoApp/ToDoPageView.vue')['default']
+    UserTaskTable: typeof import('./src/components/ToDoApp/UserTaskTable.vue')['default']
   }
 }

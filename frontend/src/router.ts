@@ -3,12 +3,14 @@ import MainPageView from '@/components/main-page-view/MainPageView.vue'
 import DayResult from '@/components/main-page-view/result-box-body/DayResult.vue'
 import LoginPage from '@/components/login-page/LoginPage.vue'
 import ResultBox from "@/components/main-page-view/result-box-body/ResultBox.vue"
+import ToDoApp from "@/components/ToDoApp/ToDoPageView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: MainPageView
+    component: ToDoApp
+    //component: MainPageView
   },
   {
     path: '/day-result',

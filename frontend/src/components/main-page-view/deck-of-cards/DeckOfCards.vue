@@ -1,212 +1,202 @@
 <template>
 <figure class="DeckOfCards">
-  <div class="DeckOfCards__rows" @drop="onDrop($event)"
-       @dragenter.prevent
-       @dragover.prevent>
-  <Card
-      v-for="card in getList(1)"
-      :key="card.id"
-      draggable="true"
-      @dragstart="startDrag($event,card)"
-      :card-name="card.name"
-      :card-color="card.color"
-      :is-visible="true"
-  />
-  </div>
-  <div class="DeckOfCards__rows" @drop="onDrop($event)"
-       @dragenter.prevent
-       @dragover.prevent>
-    <Card
-        v-for="card in getList(2)"
-        :key="card.id"
-        draggable="true"
-        @dragstart="startDrag($event,card)"
-        :card-name="card.name"
-        :card-color="card.color"
-        :is-visible="true"
-    />
-  </div>
-  <div class="DeckOfCards__rows" @drop="onDrop($event)"
-       @dragenter.prevent
-       @dragover.prevent>
-    <Card
-        v-for="card in getList(3)"
-        :key="card.id"
-        draggable="true"
-        @dragstart="startDrag($event,card)"
-        :card-name="card.name"
-        :card-color="card.color"
-        :is-visible="true"
-    />
-  </div>
-  <div class="DeckOfCards__rows" @drop="onDrop($event)"
-       @dragenter.prevent
-       @dragover.prevent>
-    <Card
-        v-for="card in getList(4)"
-        :key="card.id"
-        draggable="true"
-        @dragstart="startDrag($event,card)"
-        :card-name="card.name"
-        :card-color="card.color"
-        :is-visible="true"
-    />
-  </div>
-  <div class="DeckOfCards__zone" @drop="onDropSelected($event)"
-       @dragenter.prevent
-       @dragover.prevent>
-  <div class="DeckOfCards__zone--selected">
-      <Card draggable="true"
-            @dragstart="startDrag($event,cardsOnBoard[0])"
-          :card-name="cardsOnBoard[0].name"
-          :card-color="cardsOnBoard[0].color"
-          :is-visible="firstCard"
-      />
-      <Card draggable="true"
-            @dragstart="startDrag($event,cardsOnBoard[1])"
-          :card-name="cardsOnBoard[1].name"
-          :card-color="cardsOnBoard[1].color"
-          :is-visible="secondCard"
-      />
-      <Card draggable="true"
-            @dragstart="startDrag($event,cardsOnBoard[2])"
-          :card-name="cardsOnBoard[2].name"
-          :card-color="cardsOnBoard[2].color"
-          :is-visible="thirdCard"
-      />
+    <div class="DeckOfCards__rows DeckOfCards__clubs" @drop="onDrop($event)"
+         @dragenter.prevent
+         @dragover.prevent>
+        <Card
+                v-for="card in getList(1)"
+                :key="card.id"
+                draggable="true"
+                @dragstart="startDrag($event,card)"
+                :card-name="card.name"
+                :card-color="card.color"
+                :is-visible="true"
+        />
+    </div>
+    <div class="DeckOfCards__rows DeckOfCards__diamonds" @drop="onDrop($event)"
+         @dragenter.prevent
+         @dragover.prevent>
+        <Card
+                v-for="card in getList(2)"
+                :key="card.id"
+                draggable="true"
+                @dragstart="startDrag($event,card)"
+                :card-name="card.name"
+                :card-color="card.color"
+                :is-visible="true"
+        />
+    </div>
+    <div class="DeckOfCards__rows DeckOfCards__spades" @drop="onDrop($event)"
+         @dragenter.prevent
+         @dragover.prevent>
+        <Card
+                v-for="card in getList(3)"
+                :key="card.id"
+                draggable="true"
+                @dragstart="startDrag($event,card)"
+                :card-name="card.name"
+                :card-color="card.color"
+                :is-visible="true"
+        />
+    </div>
+    <div class="DeckOfCards__rows DeckOfCards__hearts" @drop="onDrop($event)"
+         @dragenter.prevent
+         @dragover.prevent>
+        <Card
+                v-for="card in getList(4)"
+                :key="card.id"
+                draggable="true"
+                @dragstart="startDrag($event,card)"
+                :card-name="card.name"
+                :card-color="card.color"
+                :is-visible="true"
+        />
+    </div>
+    <div class="DeckOfCards__zone" >
+        <div class="DeckOfCards__zone--selected">
+            <div class="DeckOfCards__zone--cardZone"
+                 @dragenter.prevent
+                 @dragover.prevent
+                 @drop="onDropSelected($event, 0)"
+            >
+            <Card  draggable="true"
+                   v-if="!!handData.boardCards[0]"
+                  @dragstart="startDragBoard($event,handData.boardCards[0], 0)"
+                  :card-name="handData.boardCards[0].name"
+                  :card-color="handData.boardCards[0].color"
+                  :is-visible="!!handData.boardCards[0]"
+            />
+            </div>
+            <div class="DeckOfCards__zone--cardZone"
+                 @dragenter.prevent
+                 @dragover.prevent
+                 @drop="onDropSelected($event, 1)">
+            <Card draggable="true"
+                  v-if="!!handData.boardCards[1]"
+                  @dragstart="startDragBoard($event,handData.boardCards[1], 1)"
+                  :card-name="handData.boardCards[1].name"
+                  :card-color="handData.boardCards[1].color"
+                  :is-visible="!!handData.boardCards[1]"
+            />
+                </div>
+            <div class="DeckOfCards__zone--cardZone"
+                 @dragenter.prevent
+                 @dragover.prevent
+                 @drop="onDropSelected($event, 2)">
+            <Card draggable="true"
+                  v-if="!!handData.boardCards[2]"
+                  @dragstart="startDragBoard($event,handData.boardCards[2], 2)"
+                  :card-name="handData.boardCards[2].name"
+                  :card-color="handData.boardCards[2].color"
+                  :is-visible="!!handData.boardCards[2]"
+            />
+            </div>
+            <div class="DeckOfCards__zone--cardZone"
+                 @dragenter.prevent
+                 @dragover.prevent
+                 @drop="onDropSelected($event, 3)">
+            <Card draggable="true"
+                  v-if="!!handData.boardCards[3]"
+                  @dragstart="startDragBoard($event,handData.boardCards[3], 3)"
+                  :card-name="handData.boardCards[3].name"
+                  :card-color="handData.boardCards[3].color"
+                  :is-visible="!!handData.boardCards[3]"
+            />
+            </div>
+            <div class="DeckOfCards__zone--cardZone"
+                 @dragenter.prevent
+                 @dragover.prevent
+                 @drop="onDropSelected($event, 4)">
+            <Card draggable="true"
+                  v-if="!!handData.boardCards[4]"
+                  @dragstart="startDragBoard($event,handData.boardCards[4], 4)"
+                  :card-name="handData.boardCards[4].name"
+                  :card-color="handData.boardCards[4].color"
+                  :is-visible="!!handData.boardCards[4]"
+            />
+                </div>
+        </div >
+    </div>
+    <div class="DeckOfCards__underZoneInputAndButton">
+    <PkInput v-model="comment" placeholder="comment" class="DeckOfCards__underZoneInputAndButton&#45;&#45;input"></PkInput>
+    <PkButton @click="$emit('emitCard',addCards)" class="DeckOfCards__underZoneInputAndButton&#45;&#45;confirmButton">
+        CONFIRM</PkButton></div>
 
-      <Card draggable="true"
-            @dragstart="startDrag($event,cardsOnBoard[3])"
-          :card-name="cardsOnBoard[3].name"
-          :card-color="cardsOnBoard[3].color"
-          :is-visible="fourthCard"
-      />
-      <Card draggable="true"
-            @dragstart="startDrag($event,cardsOnBoard[4])"
-          :card-name="cardsOnBoard[4].name"
-          :card-color="cardsOnBoard[4].color"
-          :is-visible="fifthCard"
-      />
-    </div >
-  </div>
-    <div class="DeckOfCards__underZoneInputAndButton"></div>
-    <PkInput v-model="comment" placeholder="comment" class="DeckOfCards__underZoneInputAndButton--input"></PkInput>
-    <PkButton @click="addCards" class="DeckOfCards__underZoneInputAndButton--confirmButton">CONFIRM</PkButton>
   </figure>
 
 </template>
 <script setup lang="ts">
 import Card from "@/components/main-page-view/card/card.vue";
-import {Ref, ref} from "vue";
+import {computed, onMounted, Ref, ref} from "vue";
 import { useResultReportStore } from "@/components/main-page-view/store/result-box-store";
 import { PkButton, PkInput } from '@/core/components/element-plus-proxy'
+import {CardStructure} from "@/global/card-structure";
+import { HandData } from "@/components/main-page-view/result-box-body/HandData";
 type cardTypeArray = {id: string ,name: string,color:string,list:number, mainId: string}[]
-export type cardType = {id: string ,name: string,color:string,list:number, mainId: string}
+
+/*const props = defineProps({
+    visiblePosition: {
+        type: Map,
+        required: true
+    }
+})*/
 
 const store = useResultReportStore();
+const handData = new HandData();
 
 const comment = ref("");
-const cardsOnBoard: cardType[] = [
-    {id:'0',name:'B',color:'CLUB',list:1, mainId: "0"},
-    {id:'0',name:'B',color:'CLUB',list:1, mainId: "0"},
-    {id:'0',name:'B',color:'CLUB',list:1, mainId: "0"},
-    {id:'0',name:'B',color:'CLUB',list:1, mainId: "0"},
-    {id:'0',name:'B',color:'CLUB',list:1, mainId: "0"},
-]
+const cardsOnBoard: CardStructure[] = []
 
-let firstCard = false;
-let secondCard = false;
-let thirdCard = false;
-let fourthCard = false;
-let fifthCard = false;
+
 
 let count = 0;
 
-const addCards = () => {
-    const sortedCards: cardType [] = cardsOnBoard.filter( card =>{
+const addCards = computed( ()=> {
+    const sortedCards: CardStructure [] = cardsOnBoard.filter(card =>{
         if(card.name !== 'B'){
             return card;
         }
     })
-    store.addBoardCards(sortedCards, comment.value);
-}
-
-const onDrop = (event) =>{
-  const itemID = event.dataTransfer.getData('itemID');
-  const item = cardNamesClub.value.find((item) => item.id == itemID) as cardType;
-  if(!item) {
-    count--;
-    switch (count) {
-      case 0: {
-        cardNamesClub.value.push(cardsOnBoard[0]);
-        firstCard = false;
-        break;
-      }
-      case 1: {
-        cardNamesClub.value.push(cardsOnBoard[1]);
-        secondCard = false;
-        break;
-      }
-      case 2: {
-        cardNamesClub.value.push(cardsOnBoard[2]);
-        thirdCard = false;
-        break;
-      }
-      case 3: {
-        cardNamesClub.value.push(cardsOnBoard[3]);
-        fourthCard = false;
-        break;
-      }
-      case 4: {
-        cardNamesClub.value.push(cardsOnBoard[4]);
-        fifthCard = false;
-        break;
-      }
+    //store.addBoardCards(sortedCards, comment.value);
+    return {
+        cards: sortedCards,
+        comment: comment.value
     }
-    cardNamesClub.value.sort((a, b) => (a.id < b.id ? -1 : 1))
-  }
+});
+
+const onDrop = (event) => {
+  const card = event.dataTransfer.getData('whichCard');
+        cardNamesClub.value.push(handData.boardCards[0]);
+
 }
-const onDropSelected = (event) =>{
+const boardCards = ref<CardStructure[] | undefined>();
+const onDropSelected = (event, number) =>{
   const itemID = event.dataTransfer.getData('itemID');
-  const item = cardNamesClub.value.find((item) => item.id == itemID) as cardType;
+  const item = cardNamesClub.value.find((item) => item.id == itemID);
   if(item) {
-    const newList = cardNamesClub.value.filter((item) => item.id != itemID) as cardTypeArray;
-    cardNamesClub.value = newList;
-
-    switch (count) {
-      case 0: {
-          cardsOnBoard[0] = item;
-        firstCard = true;
-        break;
-      }
-      case 1: {
-          cardsOnBoard[1] = item;
-        secondCard = true;
-        break;
-      }
-      case 2: {
-          cardsOnBoard[2] = item;
-        thirdCard = true;
-        break;
-      }
-      case 3: {
-          cardsOnBoard[3] = item;
-        fourthCard = true;
-        break;
-      }
-      case 4: {
-          cardsOnBoard[4] = item;
-        fifthCard = true;
-        break;
-      }
-    }
-    count++
+      handData.boardCards[number] = item;
+      cardNamesClub.value = cardNamesClub.value.filter((item) => item.id != itemID);
+  } else {
+      console.log(number);
+      const card = event.dataTransfer.getData('whichCard');
+    /*  handData.boardCards[number] = handData.boardCards[card];
+      console.log(handData.boardCards[number]);
+      console.log(handData.boardCards[card]);*/
+      handData.boardCards.push(handData.boardCards[0]);
+      console.log(handData.boardCards.length);
+     // handData.boardCards[0] = undefined;
+      console.log(handData.boardCards[0]);
   }
 }
 const startDrag = (event, item) => {
   event.dataTransfer.dropEffect = 'move';
   event.dataTransfer.effectAllowed = 'move';
   event.dataTransfer.setData('itemID', item.id);
+}
+const startDragBoard = (event, item, whichCard) =>{
+    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('whichCard', whichCard);
 }
 
 let cardNamesClub = ref([
@@ -272,8 +262,29 @@ const getList = (list) => {
 </script>
 <style lang="scss">
 .DeckOfCards{
-
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-areas:
+          "clubs ."
+          "diamonds ."
+          "spades ."
+          "hearts ."
+          "zone ."
+          "underZone .";
+  &__clubs{
+    grid-area: clubs;
+  }
+  &__diamonds{
+    grid-area: diamonds;
+  }
+  &__spades{
+    grid-area: spades;
+  }
+  &__hearts{
+    grid-area: hearts;
+  }
    &__underZoneInputAndButton {
+     grid-area: underZone;
      display: inline-block;
      &--input{
        margin-top: 5px;
@@ -289,6 +300,7 @@ const getList = (list) => {
      justify-content: center;
    }
    &__zone{
+     grid-area: zone;
      right: 0;
      position: relative;
      display: flex;
@@ -299,9 +311,15 @@ const getList = (list) => {
      background-color: blanchedalmond;
      margin-top: 20px;
      border: 1px solid black;
-     &--selected{
-       display: inline-flex;
-     }
+       &--selected{
+         display: inline-flex;
+       }
+       &--cardZone {
+           border: black solid 1px;
+           width: 40px;
+           height: 60px;
+           margin:5px;
+       }
      &--input{
      display: flex;
        justify-content: end;

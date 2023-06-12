@@ -9,5 +9,7 @@ export {
     ElDropdown as PkDropdown,
     ElDropdownItem as PkDropdownItem,
     ElDropdownMenu as PkDropdownMenu,
+    ElSelect as PkSelect,
+    ElOption as PkOption,
 } from 'element-plus';
 

@@ -10,7 +10,7 @@
         <PkButton @click="assignAction">ADD</PkButton>
     </el-col>
       <el-col :span="3">
-          <ModifiableDropdownList @selectedItem1="setPosition" emit-name="selectedItem1" :items="dropdownItemsPositions" :button-name="position"></ModifiableDropdownList>
+          <ModifiableDropdownList @selectedItem="setPosition" emit-name="selectedItem" :items="dropdownItemsPositions" :button-name="position"></ModifiableDropdownList>
       </el-col>
       <el-col :span="2">
           <div style="display: flex; flex-direction: column">
@@ -25,12 +25,12 @@
               <PkCheckBox v-model="showPositionInDropdown.CO" @change="changingDropdownListValues('CO')">Cut Off</PkCheckBox>
           </div>
       </el-col>
-    <el-col :span="9" style="margin-left: 60px">
-      <DeckOfCards/>
+    <el-col :span="11" style="margin-left: 60px">
+      <DeckOfCards @emitCard="saveCardAndComment" />
     </el-col>
     <el-col :span="6">
-         <SingleHand hand-name="Lost 100" :loss-hand="false" :show-hand="true"></SingleHand>
-         <SingleHand hand-name="Lost 100" :loss-hand="false" :show-hand="true"></SingleHand>
+<!--         <SingleHand hand-name="Lost 100" :loss-hand="false" :show-hand="true"></SingleHand>
+         <SingleHand hand-name="Lost 100" :loss-hand="false" :show-hand="true"></SingleHand>-->
     </el-col>
   </el-row>
   <el-row>
@@ -110,6 +110,11 @@ const setAction = (event) =>{
 const setPosition = (event) =>{
     position.value = event;
 }
+
+const saveCardAndComment = (event) => {
+    console.log(event);
+}
+
 const changingDropdownListValues = (item: string) => {
     if(positionsMap.value.get(item)){
         removeDropdownItem(item);
