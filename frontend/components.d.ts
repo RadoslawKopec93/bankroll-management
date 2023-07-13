@@ -19,7 +19,6 @@ declare module '@vue/runtime-core' {
     ElCol: typeof import('element-plus/es')['ElCol']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElRow: typeof import('element-plus/es')['ElRow']
-    ElSelect: typeof import('element-plus/es')['ElSelect']
     HeaderButton: typeof import('./src/components/header/header-button/HeaderButton.vue')['default']
     HeaderHeadline: typeof import('./src/components/ToDoApp/HeaderHeadline.vue')['default']
     LineChart: typeof import('./src/components/main-page-view/line-chart/LineChart.vue')['default']
