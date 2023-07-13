@@ -9,8 +9,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: ToDoApp
-    //component: MainPageView
+    component: MainPageView
   },
   {
     path: '/day-result',

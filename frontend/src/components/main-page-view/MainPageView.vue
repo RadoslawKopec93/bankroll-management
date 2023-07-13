@@ -9,15 +9,8 @@
               <DatePicker class="MainPageView__datePickerContainer--picker" v-model="testt1" @click="test1"/>
           </div>
       </el-col>
-      <el-col :span="9"  class="MainPageView__dayResultBox"     >
-          <div v-for="t in test" class="MainPageView__dayResultBox--resultButton">
-          <PkButton
-            @click="goToResult"
-            button-name="result"
-            :result="resultData.result"
-            :date="resultData.date"
-          >{{ resultData.result }} zl<br>{{resultData.date}}</PkButton>
-          </div>
+      <el-col :span="9"  class="MainPageView__dayResultBox" >
+          <SessionRegister></SessionRegister>
       </el-col>
     </el-row>
 
@@ -34,6 +27,7 @@ import {computed, ref} from "vue";
 import '@vuepic/vue-datepicker/dist/main.css';
 import ResultBox from "@/components/main-page-view/result-box-body/ResultBox.vue";
 import DatePicker from "@/core/components/element-plus/date-picker.vue";
+import SessionRegister from "@/components/main-page-view/SessionRegister.vue";
 
 const router = useRouter();
 const date = ref();
