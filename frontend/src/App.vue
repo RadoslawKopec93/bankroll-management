@@ -1,4 +1,4 @@
-<template>
+, shims-<template>
   <router-view></router-view>
 </template>
 <script>

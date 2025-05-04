@@ -5,7 +5,6 @@ import {createPinia} from "pinia";
 import {useLoginPageStore} from "@/components/login-page/store/login-page-store";
 import {createRouter, createWebHistory} from "vue-router";
 import "element-plus/dist/index.css"
-import VueDatePicker from '@vuepic/vue-datepicker';
 
 export async function main(){
 
@@ -17,7 +16,6 @@ export async function main(){
     //export default router
     const app = createApp(App).use(router).use(createPinia())
     const store = useLoginPageStore();
-    app.component('VueDatePicker', VueDatePicker);
 
 /*
     if(!store.token){

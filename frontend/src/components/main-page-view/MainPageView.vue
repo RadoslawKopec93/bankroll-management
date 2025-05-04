@@ -6,7 +6,7 @@
       <el-col :span="9"><LineChart/></el-col>
       <el-col :span="6">
           <div class="MainPageView__datePickerContainer">
-              <DatePicker class="MainPageView__datePickerContainer--picker" v-model="testt1" @click="test1"/>
+              <DateTimePicker v-model="testt1"  class="MainPageView__datePickerContainer--picker" @click="test1"/>
           </div>
       </el-col>
       <el-col :span="9"  class="MainPageView__dayResultBox" >
@@ -28,12 +28,13 @@ import '@vuepic/vue-datepicker/dist/main.css';
 import ResultBox from "@/components/main-page-view/result-box-body/ResultBox.vue";
 import DatePicker from "@/core/components/element-plus/date-picker.vue";
 import SessionRegister from "@/components/main-page-view/SessionRegister.vue";
+import DateTimePicker from "@/core/components/element-plus/date-time-picker.vue";
 
 const router = useRouter();
 const date = ref();
 
 const testt1 = computed({
-    get: () => date.value,
+    get: () => {console.log(date.value); return date.value},
     set: v => date.value = v,
 })
 const test1 = () => {

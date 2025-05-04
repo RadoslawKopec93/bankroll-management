@@ -1,5 +1,5 @@
 <template>
-    <MyForm :inline=true class="SessionRegister" label-position="top">
+    <MyForm :inline=true class="SessionRegister" label-position="top" style="padding-left: 15px">
        <MyFormItem label="BUYIN">
            <PkInput v-model="session.buyin"/>
         </MyFormItem>
@@ -36,8 +36,8 @@
 <script setup lang="ts">
 import { MyFormItem, MyForm, PkInput, PkOption, PkSelect } from "@/core/components/element-plus-proxy";
 import DatePicker from "@/core/components/element-plus/date-picker.vue";
-import {computed, ref} from "vue";
-import {usePageViewStore} from "@/components/main-page-view/store/page-view";
+import { computed, ref } from "vue";
+import { usePageViewStore } from "@/components/main-page-view/store/page-view";
 
 const tableSize = ref([2,6,9])
 const pokerType = ref ([
@@ -57,7 +57,7 @@ const test = () => {
 </script>
 <style lang="scss">
 .SessionRegister {
-    width: 500px;
+    width: 470px;
     height: 400px;
 
 

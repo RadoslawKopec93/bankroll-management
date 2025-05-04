@@ -260,7 +260,7 @@ const getList = (list) => {
 
 
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .DeckOfCards{
   display: grid;
   grid-template-columns: 3fr 1fr;

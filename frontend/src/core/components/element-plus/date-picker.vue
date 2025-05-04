@@ -1,14 +1,14 @@
 <template>
-      <ElDatePicker
+      <ElTimePicker
            class="DatePicker"
            v-model="date"
-           type="date"
+           type="time"
            placeholder="Pick a date"
     >
-       </ElDatePicker>
+       </ElTimePicker>
 </template>
 <script setup lang="ts">
-import { ElDatePicker } from "element-plus";
+import { ElDatePicker, ElTimePicker } from "element-plus";
 import { computed } from "vue";
 
 const props = defineProps({

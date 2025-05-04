@@ -57,7 +57,7 @@ const totalResult = computed(() => {
 })
 
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .chart-box {
       width: 100%;
       height: 600px
@@ -96,7 +96,7 @@ const totalResult = computed(() => {
   border: green;
 }*/
 
-ul {
+/*ul {
       list-style: none;
       padding: 0;
       // background-color: #006699;
@@ -104,7 +104,7 @@ ul {
       li {
             display: inline-block;
       }
-}
+}*/
 
 
 </style>
